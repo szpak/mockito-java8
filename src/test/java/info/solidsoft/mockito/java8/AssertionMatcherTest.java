@@ -2,7 +2,6 @@ package info.solidsoft.mockito.java8;
 
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -12,9 +11,6 @@ import org.mockito.junit.MockitoRule;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.AdditionalMatchers.gt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.startsWith;
 import static org.mockito.Mockito.verify;
 
 public class AssertionMatcherTest {
@@ -48,7 +44,6 @@ public class AssertionMatcherTest {
     }
 
     @Test
-    @Ignore //TODO: Implement it with https://github.com/jhalterman/typetools
     public void shouldAllowToUseAssertionInLambdaWithPrimitiveAsArgument() {
         //when
         ts.fireTorpedo(2);

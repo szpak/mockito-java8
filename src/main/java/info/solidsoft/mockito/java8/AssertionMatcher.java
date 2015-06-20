@@ -3,13 +3,12 @@ package info.solidsoft.mockito.java8;
 import org.hamcrest.Description;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.mockito.internal.progress.HandyReturnValues;
 
 import java.util.function.Consumer;
 
 public class AssertionMatcher<T> extends ArgumentMatcher<T> {
 
-    private static final HandyReturnValues handyReturnValues = new HandyReturnValues();
+    private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
     private final Consumer<T> consumer;
     private String errorMessage;
@@ -37,6 +36,6 @@ public class AssertionMatcher<T> extends ArgumentMatcher<T> {
 
     public static <T> T assertArg(Consumer<T> consumer) {
         Mockito.argThat(new AssertionMatcher<>(consumer));
-        return handyReturnValues.returnNull();
+        return handyReturnValues.returnForConsumerLambda(consumer);
     }
 }
