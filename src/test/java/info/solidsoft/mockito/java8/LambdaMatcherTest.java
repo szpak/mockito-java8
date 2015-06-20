@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.verify;
@@ -89,8 +90,7 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        //TODO: Add static method in LambdaMatcher
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new LambdaMatcher<>(c -> c.getMinimumRange() < 2000)));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() < 2000));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new LambdaMatcher<>(c -> c.getMinimumRange() < 2000, "minimum range closer than 2000")));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() < 2000, "minimum range closer than 2000"));
     }
 
     @Test
@@ -110,9 +110,9 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new LambdaMatcher<>(
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(
                 c -> c.getMinimumRange() < 2000 && c.getNumberOfPhasers() > 2,
-                "ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2")));
+                "ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2"));
     }
 
     //TODO: Test error messages

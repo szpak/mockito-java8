@@ -6,11 +6,13 @@ import org.hamcrest.Matcher;
 
 import java.util.function.Predicate;
 
+import static org.mockito.Matchers.argThat;
+
 public class LambdaMatcher<T> extends BaseMatcher<T> {
 
     private final Matcher<T> backendMatcher;
 
-    public LambdaMatcher(final Predicate<T> lambda, final String desc) {
+    private LambdaMatcher(Predicate<T> lambda, String description) {
         this.backendMatcher = new BaseMatcher<T>() {
             @SuppressWarnings("unchecked")
             @Override
@@ -23,14 +25,10 @@ public class LambdaMatcher<T> extends BaseMatcher<T> {
             }
 
             @Override
-            public void describeTo(Description description) {
-                description.appendText(desc);
+            public void describeTo(Description hamcrestDesc) {
+                hamcrestDesc.appendText(description);
             }
         };
-    }
-
-    public LambdaMatcher(final Predicate<T> lambda) {
-        this(lambda, "Inline lambda expression - add description in code to get more detailed error message");
     }
 
     @Override
@@ -41,5 +39,13 @@ public class LambdaMatcher<T> extends BaseMatcher<T> {
     @Override
     public void describeTo(Description description) {
         backendMatcher.describeTo(description);
+    }
+
+    public static <T> T argLambda(Predicate<T> lambda) {
+        return argLambda(lambda, "Inline lambda expression - add description in code to get more detailed error message");
+    }
+
+    public static <T> T argLambda(Predicate<T> lambda, String description) {
+        return argThat(new LambdaMatcher<>(lambda, description));
     }
 }
