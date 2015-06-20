@@ -2,6 +2,7 @@ package info.solidsoft.mockito.java8;
 
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
+import org.assertj.core.api.ThrowableAssert;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.CustomMatcher;
 import org.hamcrest.Description;
@@ -14,6 +15,7 @@ import org.mockito.junit.MockitoRule;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.verify;
 
@@ -55,13 +57,14 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new CustomMatcher<ShipSearchCriteria>("ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2") {
-            @Override
-            public boolean matches(Object item) {
-                ShipSearchCriteria criteria = (ShipSearchCriteria) item;
-                return criteria.getMinimumRange() < 2000 && criteria.getNumberOfPhasers() > 2;
-            }
-        }));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(
+                new CustomMatcher<ShipSearchCriteria>("ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2") {
+                    @Override
+                    public boolean matches(Object item) {
+                        ShipSearchCriteria criteria = (ShipSearchCriteria) item;
+                        return criteria.getMinimumRange() < 2000 && criteria.getNumberOfPhasers() > 2;
+                    }
+                }));
     }
 
     @Test
@@ -115,6 +118,26 @@ public class LambdaMatcherTest {
                 "ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2"));
     }
 
-    //TODO: Test error messages
-    //TODO: Get lambda content?
+    @Test
+    public void shouldKeepDescriptionInErrorMessage() {
+        //given
+        final String DESCRIPTION = "minimum range closer than 100";
+        //when
+        ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
+        //then
+        ThrowableAssert.ThrowingCallable verifyLambda = () -> {
+            verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() < 100, DESCRIPTION));
+        };
+        assertThatThrownBy(verifyLambda)
+                .isInstanceOf(AssertionError.class)
+                .hasMessageContaining("Argument(s) are different! Wanted:\n" +
+                        "ts.findNumberOfShipsInRangeByCriteria(\n" +
+                        "    " + DESCRIPTION + "\n" +
+                        ");")
+                .hasMessageContaining("Actual invocation has different arguments:\n" +
+                        "ts.findNumberOfShipsInRangeByCriteria(\n" +
+                        "    ShipSearchCriteria{minimumRange=1000, numberOfPhasers=4}\n" +
+                        ");");
+
+    }
 }

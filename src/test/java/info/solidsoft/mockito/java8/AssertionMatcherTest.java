@@ -2,6 +2,7 @@ package info.solidsoft.mockito.java8;
 
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -11,6 +12,7 @@ import org.mockito.junit.MockitoRule;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 
 public class AssertionMatcherTest {
@@ -21,10 +23,10 @@ public class AssertionMatcherTest {
     @Mock
     private TacticalStation ts;
 
+    private ShipSearchCriteria searchCriteria = new ShipSearchCriteria(1000, 4);
+
     @Test
     public void shouldAllowToUseArgumentCaptorInClassicWay() {
-        //given
-        ShipSearchCriteria searchCriteria = new ShipSearchCriteria(1000, 4);
         //when
         ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -35,8 +37,6 @@ public class AssertionMatcherTest {
 
     @Test
     public void shouldAllowToUseAssertionInLambda() {
-        //given
-        ShipSearchCriteria searchCriteria = new ShipSearchCriteria(1000, 4);
         //when
         ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -49,5 +49,28 @@ public class AssertionMatcherTest {
         ts.fireTorpedo(2);
         //then
         verify(ts).fireTorpedo(assertArg(i -> assertThat(i).isEqualTo(2)));
+    }
+
+    @Test
+    public void shouldHaveMeaningfulErrorMessage() {
+        //when
+        ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
+        //then
+        ThrowableAssert.ThrowingCallable verifyLambda = () -> {
+            verify(ts).findNumberOfShipsInRangeByCriteria(assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(50)));
+        };
+        assertThatThrownBy(verifyLambda)
+                .isInstanceOf(AssertionError.class)
+                .hasMessageContaining("Argument(s) are different! Wanted:\n" +
+                        "ts.findNumberOfShipsInRangeByCriteria(\n" +
+                        "    AssertionMatcher reported: \n" +
+                        "Expecting:\n" +
+                        " <1000>\n" +
+                        "to be less than:\n" +
+                        " <50> ")
+                .hasMessageContaining("Actual invocation has different arguments:\n" +
+                        "ts.findNumberOfShipsInRangeByCriteria(\n" +
+                        "    ShipSearchCriteria{minimumRange=1000, numberOfPhasers=4}\n" +
+                        ");");
     }
 }
