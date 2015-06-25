@@ -1,4 +1,4 @@
-# Mockito-Java8
+# Mockito-Java8 [![Build Status](https://travis-ci.org/szpak/mockito-java8.svg?branch=master)](https://travis-ci.org/szpak/mockito-java8) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8/badge.svg)](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8)
 
 Mockito add-ons leveraging Java 8 and lambda expressions to make mocking even more compact.
 
@@ -17,7 +17,8 @@ given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() >
 Allows to use ArgumentCaptor in one line (here with AssertJ):
 
 ```
-verify(ts).findNumberOfShipsInRangeByCriteria(assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(2000)));
+verify(ts).findNumberOfShipsInRangeByCriteria(
+    assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(2000)));
 ```
 
 ## Configuration in a project
@@ -26,15 +27,24 @@ mockito-java8 jars are available in Maven Central.
 
 ### Gradle
 
-TODO
+```
+testCompile 'info.solidsoft.mockito:mockito-java8:0.3.0'
+```
 
 ### Maven
 
-TODO
+```
+<dependency>
+    <groupId>info.solidsoft.mockito</groupId>
+    <artifactId>mockito-java8</artifactId>
+    <version>0.3.0</version>
+    <scope>test</scope>
+</dependency>
+```
 
 ### Other
 
-Click Maven Central badge to have configuration snippets for SBT, Ivy and more.
+Click Maven Central badge [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8/badge.svg)](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8) to set configuration snippets for SBT, Ivy and more.
 
 ## Provided add-ons
 
@@ -66,7 +76,7 @@ In comparison the same logic implemented with a custom Answer in Java 7:
 
 ```
 @Test
-public void stubbingWithCustomAsnwerShouldBeLonger() {
+public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
     //given
     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
         @Override
@@ -91,7 +101,7 @@ Even Java 8 and less readable constructions don't help too much:
 
 ```
 @Test
-public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {
+public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {  //old way
     //given
     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(invocation -> {
         ShipSearchCriteria criteria = (ShipSearchCriteria) invocation.getArguments()[0];
@@ -122,7 +132,7 @@ In comparison to 3 lines in the classic way:
 
 ```
 @Test
-public void shouldAllowToUseArgumentCaptorInClassicWay() {
+public void shouldAllowToUseArgumentCaptorInClassicWay() {  //old way
     //when
     ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
     //then
