@@ -1,4 +1,35 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3'
+        classpath 'pl.allegro.tech.build:axion-release-plugin:1.2.3'
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'pl.allegro.tech.build.axion-release'
+apply plugin: 'com.bmuschko.nexus'
+apply plugin: 'io.codearte.nexus-staging'
+
+scmVersion {
+    tag {
+        prefix = 'release'
+        versionSeparator = '/'
+    }
+    createReleaseCommit = true
+    releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
+    hooks {
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /"info\.solidsoft\.mockito:mockito-java8:.*"/},
+                           replacement: {v, p -> "\"info.solidsoft.mockito:mockito-java8:$v\""}]
+    }
+}
+
+project.version = scmVersion.version
+
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -11,4 +42,48 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.0.0'
+}
+
+nexusStaging {
+    packageGroup = "info.solidsoft"
+    stagingProfileId = "34a3a5beeaa96"
+}
+
+modifyPom {
+    project {
+        name 'Mockito-Java8'
+        description 'Mockito add-ons leveraging Java 8 and lambda expressions to make mocking even more compact'
+        url 'https://github.com/szpak/mockito-java8'
+        inceptionYear '2015'
+
+        scm {
+            url 'https://github.com/szpak/mockito-java8'
+            connection 'scm:https://github.com/szpak/mockito-java8'
+            developerConnection 'scm:git://github.com/szpak/mockito-java8'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'szpak'
+                name 'Marcin Zajączkowski'
+                email 'mszpak ATT wp DOTT pl'
+                roles {
+                    role 'developer'
+                    role 'despot'
+                }
+            }
+        }
+    }
+}
+
+wrapper {
+    gradleVersion "2.4"
 }
