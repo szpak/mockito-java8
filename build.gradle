@@ -84,6 +84,13 @@ modifyPom {
     }
 }
 
+//Disable JavaDoc doclint on Java 8 - it fails on invalid JavaDoc elements in mockito-core jar.
+if (JavaVersion.current().isJava8Compatible()) {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
 wrapper {
     gradleVersion "2.4"
 }
