@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.mockito:mockito-core:2.0.16-beta'
+    compile 'org.mockito:mockito-core:1.10.19'  //provided? version range?
     compile 'net.jodah:typetools:0.4.1'
     compile 'org.hamcrest:hamcrest-core:1.3'    //to have 1.3 in both test and compile scope
 
@@ -84,7 +84,7 @@ modifyPom {
     }
 }
 
-//Disable JavaDoc doclint on Java 8 - it fails on invalid JavaDoc elements in mockito-core jar.
+//Disable JavaDoc doclint on Java 8 - it fails on invalid JavaDoc elements in mockito-core jar
 if (JavaVersion.current().isJava8Compatible()) {
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')

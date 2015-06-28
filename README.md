@@ -45,7 +45,11 @@ testCompile 'info.solidsoft.mockito:mockito-java8:0.3.0'
 
 ### Other
 
-Click Maven Central badge [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8/badge.svg)](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8) to set configuration snippets for SBT, Ivy and more.
+Click Maven Central badge [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8/badge.svg)](https://maven-badges.herokuapp.com/maven-central/info.solidsoft.mockito/mockito-java8) to get configuration snippets for SBT, Ivy and more.
+
+## Mockito compatibility
+
+Mockito-Java8 should be compatible with Mockito 1.10.x and 2.0.x-beta releases (tested with 2.0.23-beta)
 
 ## Provided add-ons
 
