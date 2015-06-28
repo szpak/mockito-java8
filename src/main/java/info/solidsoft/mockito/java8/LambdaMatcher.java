@@ -8,6 +8,69 @@ import java.util.function.Predicate;
 
 import static org.mockito.Matchers.argThat;
 
+/**
+ * Allows creating inlined argument matcher with a lambda expression.
+ * <p>
+ * With Java 8 and lambda expressions ArgumentCaptor can be expressed inline:
+ *
+ * <pre class="code"><code class="java">
+ * {@literal@}Test
+ * public void shouldAllowToUseLambdaInStubbing() {
+ *     //given
+ *     given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+ * }
+ * </code></pre>
+ * <p>
+ * In comparison the same logic implemented with a custom Answer in Java 7:
+ *
+ * <pre class="code"><code class="java">
+ * {@literal@}Test
+ * public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
+ *     //given
+ *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
+ *         {@literal@}Override
+ *         public Integer answer(InvocationOnMock invocation) throws Throwable {
+ *             Object[] args = invocation.getArguments();
+ *             ShipSearchCriteria criteria = (ShipSearchCriteria) args[0];
+ *             if (criteria.getMinimumRange() > 1000) {
+ *                 return 4;
+ *             } else {
+ *                 return 0;
+ *             }
+ *         }
+ *     });
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+ * }
+ * </code></pre>
+ * <p>
+ * Even Java 8 alone and using less readable constructions produce less compact code:
+ *
+ * <pre class="code"><code class="java">
+ * {@literal@}Test
+ * public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {  //old way
+ *     //given
+ *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(invocation -> {
+ *         ShipSearchCriteria criteria = (ShipSearchCriteria) invocation.getArguments()[0];
+ *         return criteria.getMinimumRange() > 1000 ? 4 : 0;
+ *     });
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+ *     //expect
+ *     assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+ * }
+ * </code></pre>
+ *
+ * @param <T> type of argument
+ *
+ * @author Marcin Zajączkowski
+ */
 public class LambdaMatcher<T> extends BaseMatcher<T> {
 
     private final Matcher<T> backendMatcher;
