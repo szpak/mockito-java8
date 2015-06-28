@@ -14,7 +14,7 @@ import static org.mockito.Matchers.argThat;
  * With Java 8 and lambda expressions ArgumentCaptor can be expressed inline:
  *
  * <pre class="code"><code class="java">
- * {@literal@}Test
+ *{@literal @}Test
  * public void shouldAllowToUseLambdaInStubbing() {
  *     //given
  *     given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
@@ -28,11 +28,11 @@ import static org.mockito.Matchers.argThat;
  * In comparison the same logic implemented with a custom Answer in Java 7:
  *
  * <pre class="code"><code class="java">
- * {@literal@}Test
+ *{@literal @}Test
  * public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
  *     //given
  *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
- *         {@literal@}Override
+ *        {@literal @}Override
  *         public Integer answer(InvocationOnMock invocation) throws Throwable {
  *             Object[] args = invocation.getArguments();
  *             ShipSearchCriteria criteria = (ShipSearchCriteria) args[0];
@@ -53,7 +53,7 @@ import static org.mockito.Matchers.argThat;
  * Even Java 8 alone and using less readable constructions produce less compact code:
  *
  * <pre class="code"><code class="java">
- * {@literal@}Test
+ *{@literal @}Test
  * public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {  //old way
  *     //given
  *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(invocation -> {

@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * With Java 8 and lambda expressions ArgumentCaptor can be inlined:
  *
  * <pre class="code"><code class="java">
- * {@literal@}Test
+ *{@literal @}Test
  * public void shouldAllowToUseAssertionInLambda() {
  *   //when
  *   ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
  * in comparison to 3 lines in the classic way:
  *
  * <pre class="code"><code class="java">
- * {@literal@}Test
+ *{@literal @}Test
  * public void shouldAllowToUseArgumentCaptorInClassicWay() {  //old way
  *     //when
  *     ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
