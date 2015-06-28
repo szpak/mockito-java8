@@ -27,6 +27,7 @@ scmVersion {
     }
 }
 
+project.group = "info.solidsoft.mockito"
 project.version = scmVersion.version
 
 sourceCompatibility = 1.8
