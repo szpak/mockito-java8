@@ -9,7 +9,8 @@ Mockito add-ons leveraging Java 8 and lambda expressions to make mocking even mo
 Allows for stubbing with matcher logic defined within a lambda expression. Useful when working with complex classes pass as an argument.
 
 ```
-given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
+given(ts.findNumberOfShipsInRangeByCriteria(
+    argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
 ```
 
 ### Argument Captor - Java 8 edition
@@ -64,11 +65,14 @@ class ShipSearchCriteria {
 @Test
 public void shouldAllowToUseLambdaInStubbing() {
     //given
-    given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
+    given(ts.findNumberOfShipsInRangeByCriteria(
+        argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2)))
+        .isEqualTo(4);
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2)))
+        .isEqualTo(0);
 }
 ```
 
@@ -91,9 +95,11 @@ public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
         }
     });
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2)))
+        .isEqualTo(4);
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2)))
+        .isEqualTo(0);
 }
 ```
 
@@ -108,9 +114,11 @@ public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {  //old way
         return criteria.getMinimumRange() > 1000 ? 4 : 0;
     });
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2))).isEqualTo(4);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(1500, 2)))
+        .isEqualTo(4);
     //expect
-    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
+    assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2)))
+        .isEqualTo(0);
 }
 ```
 
@@ -124,7 +132,8 @@ public void shouldAllowToUseAssertionInLambda() {
     //when
     ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
     //then
-    verify(ts).findNumberOfShipsInRangeByCriteria(assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(2000)));
+    verify(ts).findNumberOfShipsInRangeByCriteria(
+        assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(2000)));
 }
 ```
 
@@ -136,7 +145,8 @@ public void shouldAllowToUseArgumentCaptorInClassicWay() {  //old way
     //when
     ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
     //then
-    ArgumentCaptor<ShipSearchCriteria> captor = ArgumentCaptor.forClass(ShipSearchCriteria.class);
+    ArgumentCaptor<ShipSearchCriteria> captor = 
+        ArgumentCaptor.forClass(ShipSearchCriteria.class);
     verify(ts).findNumberOfShipsInRangeByCriteria(captor.capture());
     assertThat(captor.getValue().getMinimumRange()).isLessThan(2000);
 }
