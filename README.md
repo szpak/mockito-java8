@@ -84,7 +84,7 @@ In comparison the same logic implemented with a custom Answer in Java 7:
 
 ```
 @Test
-public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
+public void stubbingWithCustomAnswerShouldBeLonger() {  //old way
     //given
     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
         @Override
@@ -111,7 +111,7 @@ Even Java 8 and less readable constructions don't help too much:
 
 ```
 @Test
-public void stubbingWithCustomAsnwerShouldBeLongerEvenAsLambda() {  //old way
+public void stubbingWithCustomAnswerShouldBeLongerEvenAsLambda() {  //old way
     //given
     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(invocation -> {
         ShipSearchCriteria criteria = (ShipSearchCriteria) invocation.getArguments()[0];
