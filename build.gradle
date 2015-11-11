@@ -22,8 +22,10 @@ scmVersion {
     createReleaseCommit = true
     releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
     hooks {
-        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /"info\.solidsoft\.mockito:mockito-java8:.*"/},
-                           replacement: {v, p -> "\"info.solidsoft.mockito:mockito-java8:$v\""}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /'info\.solidsoft\.mockito:mockito-java8:.*'/},
+                           replacement: {v, p -> "\'info.solidsoft.mockito:mockito-java8:$v\'"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /<version>.*<\/version>/},
+                           replacement: {v, p -> "<version>$v</version>"}]
     }
 }
 
