@@ -29,7 +29,7 @@ mockito-java8 jars are available in Maven Central.
 ### Gradle
 
 ```
-testCompile 'info.solidsoft.mockito:mockito-java8:0.3.0'
+testCompile 'info.solidsoft.mockito:mockito-java8:0.3.1'
 ```
 
 ### Maven
@@ -38,7 +38,7 @@ testCompile 'info.solidsoft.mockito:mockito-java8:0.3.0'
 <dependency>
     <groupId>info.solidsoft.mockito</groupId>
     <artifactId>mockito-java8</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
