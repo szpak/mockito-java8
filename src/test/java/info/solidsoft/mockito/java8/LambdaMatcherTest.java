@@ -8,13 +8,12 @@ package info.solidsoft.mockito.java8;
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.CustomMatcher;
-import org.hamcrest.Description;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
+import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
@@ -38,7 +37,7 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new BaseMatcher<ShipSearchCriteria>() {
+        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new ArgumentMatcher<ShipSearchCriteria>() {
             @Override
             public boolean matches(Object item) {
                 ShipSearchCriteria criteria = (ShipSearchCriteria) item;
@@ -46,8 +45,8 @@ public class LambdaMatcherTest {
             }
 
             @Override
-            public void describeTo(Description description) {
-                description.appendText("ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2");
+            public String toString() {
+                return "ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2";
             }
         }));
     }
@@ -59,14 +58,14 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(
+        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new HamcrestArgumentMatcher<>(    //TODO: Report issue with <> to JetBrains
                 new CustomMatcher<ShipSearchCriteria>("ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2") {
                     @Override
                     public boolean matches(Object item) {
                         ShipSearchCriteria criteria = (ShipSearchCriteria) item;
                         return criteria.getMinimumRange() < 2000 && criteria.getNumberOfPhasers() > 2;
                     }
-                }));
+                })));
     }
 
     @Test
@@ -80,7 +79,7 @@ public class LambdaMatcherTest {
     }
 
     //TODO: 2000 -> 2 0 0 0 - useful anywhere? - worth to implement?
-    private static class MoreThan2ShipsCloserThan2000 extends ArgumentMatcher<ShipSearchCriteria> {
+    private static class MoreThan2ShipsCloserThan2000 implements ArgumentMatcher<ShipSearchCriteria> {
         @Override
         public boolean matches(Object item) {
             ShipSearchCriteria criteria = (ShipSearchCriteria) item;

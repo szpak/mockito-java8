@@ -46,7 +46,7 @@ import java.util.function.Consumer;
  *
  * @author Marcin Zajączkowski
  */
-public class AssertionMatcher<T> extends ArgumentMatcher<T> {
+public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
@@ -70,8 +70,8 @@ public class AssertionMatcher<T> extends ArgumentMatcher<T> {
     }
 
     @Override
-    public void describeTo(Description description) {
-        description.appendText("AssertionMatcher reported: " + errorMessage);
+    public String toString() {
+        return "AssertionMatcher reported: " + errorMessage;
     }
 
     public static <T> T assertArg(Consumer<T> consumer) {
