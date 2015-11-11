@@ -2,5 +2,11 @@ language: groovy
 jdk:
   - oraclejdk8
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 install: ./gradlew assemble --stacktrace --info
 script: ./gradlew check --stacktrace --info --continue
+
