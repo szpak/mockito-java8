@@ -49,7 +49,10 @@ Click Maven Central badge [![Maven Central](https://maven-badges.herokuapp.com/m
 
 ## Mockito compatibility
 
-Mockito-Java8 should be compatible with Mockito 1.10.x and 2.0.x-beta releases (tested with 2.0.23-beta)
+Mockito-Java8 should be compatible with Mockito 1.10.x and 2.0.x-beta releases up to 2.0.21-beta.
+
+Starting with version 2.0.22-beta the matcher API in Mockito has been refactored in a not backward compatible way. The new mockito-java8 version
+will be released in a predictable future to [support it](https://github.com/szpak/mockito-java8/issues/1).  
 
 ## Provided add-ons
 
