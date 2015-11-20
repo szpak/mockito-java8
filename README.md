@@ -161,11 +161,21 @@ public void shouldAllowToUseArgumentCaptorInClassicWay() {  //old way
 
 ## Rationale
 
-Mockito-Java8 is a side effect of my short presentation [Java 8 brings power to testing!](https://speakerdeck.com/szpak/java-8-brings-power-to-testing) which I gave at GeeCON TDD 2015 and DevConf.cz 2015. In my speech using 4 examples I showed how Java 8 - namely lambda expressions - can simplify testing tools.
+Mockito-Java8 is a side effect of my short presentation [Java 8 brings power to testing!](https://speakerdeck.com/szpak/java-8-brings-power-to-testing)
+which I gave at GeeCON TDD 2015 and DevConf.cz 2015. In my speech, using 4 examples, I showed how Java 8 - namely lambda expressions - can simplify testing tools.
+
+
+## Limitations
+
+Unfortunately there is a set of nice Java 8 related features which cannot be implemented without a non backward compatible changes in Mockito core and
+therefore cannot be implemented as an add-on. A good news is that [Mockito 3.0](https://github.com/mockito/mockito/issues/297) is planned to require
+Java 8 making it all possible. 
+
 
 ## Additional information 
 
-mockito-java8 has been written by Marcin Zajączkowski. The author can be contacted directly via email: mszpak ATT wp DOTT pl. There is also Marcin's blog available: [Solid Soft](http://blog.solidsoft.info/) - working code is not enough.
+mockito-java8 has been written by Marcin Zajączkowski. The author can be contacted directly via email: mszpak ATT wp DOTT pl.
+There is also Marcin's blog available: [Solid Soft](http://blog.solidsoft.info/) - working code is not enough.
 
 mockito-java8 is a separate project and is NOT supported by The Mockito Core Team.
 
