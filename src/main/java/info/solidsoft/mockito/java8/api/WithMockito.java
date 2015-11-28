@@ -285,9 +285,9 @@ public interface WithMockito extends WithMatchers {
     }
 
     /**
-     * Delegates call to {@link Mockito#after(int)}.
+     * Delegates call to {@link Mockito#after(long)}.
      */
-    default VerificationAfterDelay after(int millis) {
+    default VerificationAfterDelay after(long millis) {
         return Mockito.after(millis);
     }
 

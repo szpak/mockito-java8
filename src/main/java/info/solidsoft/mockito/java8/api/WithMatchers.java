@@ -5,7 +5,7 @@
  */
 package info.solidsoft.mockito.java8.api;
 
-import org.hamcrest.Matcher;
+import org.mockito.ArgumentMatcher;
 import org.mockito.Matchers;
 
 import java.util.Collection;
@@ -331,65 +331,65 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link Matchers#argThat(Matcher)}.
+     * Delegates call to {@link Matchers#argThat(ArgumentMatcher)}.
      */
-    default <T> T argThat(Matcher<T> matcher) {
+    default <T> T argThat(ArgumentMatcher<T> matcher) {
         return Matchers.argThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#charThat(Matcher)}.
+     * Delegates call to {@link Matchers#charThat(ArgumentMatcher)}.
      */
-    default char charThat(Matcher<Character> matcher) {
+    default char charThat(ArgumentMatcher<Character> matcher) {
         return Matchers.charThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#booleanThat(Matcher)}.
+     * Delegates call to {@link Matchers#booleanThat(ArgumentMatcher)}.
      */
-    default boolean booleanThat(Matcher<Boolean> matcher) {
+    default boolean booleanThat(ArgumentMatcher<Boolean> matcher) {
         return Matchers.booleanThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#byteThat(Matcher)}.
+     * Delegates call to {@link Matchers#byteThat(ArgumentMatcher)}.
      */
-    default byte byteThat(Matcher<Byte> matcher) {
+    default byte byteThat(ArgumentMatcher<Byte> matcher) {
         return Matchers.byteThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#shortThat(Matcher)}.
+     * Delegates call to {@link Matchers#shortThat(ArgumentMatcher)}.
      */
-    default short shortThat(Matcher<Short> matcher) {
+    default short shortThat(ArgumentMatcher<Short> matcher) {
         return Matchers.shortThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#intThat(Matcher)}.
+     * Delegates call to {@link Matchers#intThat(ArgumentMatcher)}.
      */
-    default int intThat(Matcher<Integer> matcher) {
+    default int intThat(ArgumentMatcher<Integer> matcher) {
         return Matchers.intThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#longThat(Matcher)}.
+     * Delegates call to {@link Matchers#longThat(ArgumentMatcher)}.
      */
-    default long longThat(Matcher<Long> matcher) {
+    default long longThat(ArgumentMatcher<Long> matcher) {
         return Matchers.longThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#floatThat(Matcher)}.
+     * Delegates call to {@link Matchers#floatThat(ArgumentMatcher)}.
      */
-    default float floatThat(Matcher<Float> matcher) {
+    default float floatThat(ArgumentMatcher<Float> matcher) {
         return Matchers.floatThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#doubleThat(Matcher)}.
+     * Delegates call to {@link Matchers#doubleThat(ArgumentMatcher)}.
      */
-    default double doubleThat(Matcher<Double> matcher) {
+    default double doubleThat(ArgumentMatcher<Double> matcher) {
         return Matchers.doubleThat(matcher);
     }
 }
