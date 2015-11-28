@@ -304,4 +304,13 @@ public interface WithMockito extends WithMatchers {
     default MockSettings withSettings() {
         return Mockito.withSettings();
     }
+
+    /**
+     * Delegates call to {@link Mockito#description(String)}.
+     *
+     * @since 2.0.0
+     */
+    default VerificationMode description(String description) {
+        return Mockito.description(description);
+    }
 }
