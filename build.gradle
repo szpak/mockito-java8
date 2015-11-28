@@ -40,7 +40,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.mockito:mockito-core:[1.10.12, 2.0.21-beta]'   //how does it fit into 2.0.0 final?
+    compile 'org.mockito:mockito-core:[2.0.22-beta, 3.0.0)'
     compile 'net.jodah:typetools:0.4.4'
     compile 'org.hamcrest:hamcrest-core:1.3'    //to have 1.3 in both test and compile scope
 

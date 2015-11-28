@@ -5,9 +5,7 @@
  */
 package info.solidsoft.mockito.java8;
 
-import org.hamcrest.Description;
 import org.mockito.ArgumentMatcher;
-import org.mockito.Incubating;
 import org.mockito.Mockito;
 
 import java.util.function.Consumer;
@@ -47,8 +45,7 @@ import java.util.function.Consumer;
  *
  * @author Marcin Zajączkowski
  */
-@Incubating
-public class AssertionMatcher<T> extends ArgumentMatcher<T> {
+public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
@@ -72,8 +69,8 @@ public class AssertionMatcher<T> extends ArgumentMatcher<T> {
     }
 
     @Override
-    public void describeTo(Description description) {
-        description.appendText("AssertionMatcher reported: " + errorMessage);
+    public String toString() {
+        return "AssertionMatcher reported: " + errorMessage;
     }
 
     public static <T> T assertArg(Consumer<T> consumer) {

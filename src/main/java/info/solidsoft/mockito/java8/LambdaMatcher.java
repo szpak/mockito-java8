@@ -5,10 +5,7 @@
  */
 package info.solidsoft.mockito.java8;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.mockito.Incubating;
+import org.mockito.ArgumentMatcher;
 
 import java.util.function.Predicate;
 
@@ -77,13 +74,12 @@ import static org.mockito.Matchers.argThat;
  *
  * @author Marcin Zajączkowski
  */
-@Incubating
-public class LambdaMatcher<T> extends BaseMatcher<T> {
+public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
-    private final Matcher<T> backendMatcher;
+    private final ArgumentMatcher<T> backendMatcher;    //TODO: Could it be done with just one matcher?
 
     private LambdaMatcher(Predicate<T> lambda, String description) {
-        this.backendMatcher = new BaseMatcher<T>() {
+        this.backendMatcher = new ArgumentMatcher<T>() {
             @SuppressWarnings("unchecked")
             @Override
             public boolean matches(Object item) {
@@ -95,8 +91,8 @@ public class LambdaMatcher<T> extends BaseMatcher<T> {
             }
 
             @Override
-            public void describeTo(Description hamcrestDesc) {
-                hamcrestDesc.appendText(description);
+            public String toString() {
+                return description;
             }
         };
     }
@@ -107,8 +103,8 @@ public class LambdaMatcher<T> extends BaseMatcher<T> {
     }
 
     @Override
-    public void describeTo(Description description) {
-        backendMatcher.describeTo(description);
+    public String toString() {
+        return backendMatcher.toString();
     }
 
     public static <T> T argLambda(Predicate<T> lambda) {
