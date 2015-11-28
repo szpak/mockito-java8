@@ -8,6 +8,7 @@ package info.solidsoft.mockito.java8;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.mockito.Incubating;
 
 import java.util.function.Predicate;
 
@@ -76,6 +77,7 @@ import static org.mockito.Matchers.argThat;
  *
  * @author Marcin Zajączkowski
  */
+@Incubating
 public class LambdaMatcher<T> extends BaseMatcher<T> {
 
     private final Matcher<T> backendMatcher;

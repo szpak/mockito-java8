@@ -22,6 +22,22 @@ verify(ts).findNumberOfShipsInRangeByCriteria(
     assertArg(sc -> assertThat(sc.getMinimumRange()).isLessThan(2000)));
 ```
 
+### Mockito API methods available via interfaces (without static imports)
+
+Allows to use methods from Mockito API without the need to use static imports. It is enough to make your test class implement `WithBDDMockito`
+interface to have all methods from Mockito API available directly (especially useful for Eclipse users).
+
+```
+class SpaceShipTest implements WithBDDMockito {
+    //stub and verify as usual without static imports
+}
+```
+
+Available interfaces: [`WithBDDMockito`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithBDDMockito.java),
+[`WithMockito`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithMockito.java) and
+[`WithAdditionalMatchers`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithAdditionalMatchers.java).
+
+
 ## Configuration in a project
 
 mockito-java8 jars are available in Maven Central.
@@ -158,6 +174,41 @@ public void shouldAllowToUseArgumentCaptorInClassicWay() {  //old way
     assertThat(captor.getValue().getMinimumRange()).isLessThan(2000);
 }
 ```
+
+### Mockito API methods available via interfaces (without static imports)
+
+Allows to use methods from Mockito API without the need to use static imports. It is enough to make your test class implement `WithBDDMockito`
+interface to have all methods from stubbing/mockito Mockito API available directly.
+
+```
+//no need to use static imports!
+
+public class SpaceShipTest implements WithBDDMockito {
+
+    @Test
+    public void shouldVerifyMethodExecution() {
+        //given
+        TacticalStation tsSpy = spy(TacticalStation.class);
+        willDoNothing().given(tsSpy).fireTorpedo(2);
+        //when
+        tsSpy.fireTorpedo(2);
+        tsSpy.fireTorpedo(2);
+        //then
+        then(tsSpy).should(times(2)).fireTorpedo(2);
+    }
+}
+```
+
+The same code would work fine with a bunch of static imports. Of course they can be hidden in IDE and usually do not disturb much. Nevertheless
+to be able to write just a method name (e.g. `mock(TacticalStation.class)`) without a class is it required to press ALT-ENTER (in IntelliJ IDEA)
+to add each static import on the first usage of a given method in a test class. The situation is even worse in Eclipse where it is
+[required](http://stackoverflow.com/a/290756/313516) to earlier add `BDDMockito` to "Favorites" in "Content Assist" to make it suggested by IDE.
+
+Mockito methods are provided by 3 base interfaces, being an entry point for given set of methods:
+ - [`WithBDDMockito`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithBDDMockito.java) - stubbing/mocking API in BDD style
+ - [`WithMockito`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithMockito.java) - classic stubbing/mocking API
+ - [`WithAdditionalMatchers`](https://github.com/szpak/mockito-java8/blob/master/src/main/java/info/solidsoft/mockito/java8/api/WithAdditionalMatchers.java) - additional matchers
+
 
 ## Rationale
 
