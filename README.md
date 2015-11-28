@@ -68,6 +68,8 @@ Click Maven Central badge [![Maven Central](https://maven-badges.herokuapp.com/m
 Mockito-Java8 has two development lines. Versions 1.x (and 0.3.x) should be compatible with Mockito 1.10.12+ and 2.0.x-beta up to 2.0.21-beta.
 Versions 2.x supports the new matchers API and should be compatible with Mockito 2.0.22-beta and newer versions.
 
+Documentation for versions 2.x can be found in the [master branch](https://github.com/szpak/mockito-java8).  
+
 ## Provided add-ons
 
 ### Lambda matcher
