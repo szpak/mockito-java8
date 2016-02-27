@@ -95,6 +95,3 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
-wrapper {
-    gradleVersion "2.4"
-}
