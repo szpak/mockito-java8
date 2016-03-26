@@ -3,6 +3,9 @@ package info.solidsoft.mockito.java8.api;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.junit.Test;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WithBDDMockitoTest implements WithBDDMockito {
@@ -28,5 +31,15 @@ public class WithBDDMockitoTest implements WithBDDMockito {
         tsSpy.fireTorpedo(2);
         //then
         then(tsSpy).should(times(2)).fireTorpedo(2);
+    }
+
+    @Test(expected = IOException.class) //Issue #7
+    public void shouldProperlyCallVarargsMethod() throws IOException {
+        //given
+        BufferedWriter writerMock = mock(BufferedWriter.class);
+        //when
+        willThrow(new IOException()).given(writerMock).write(anyString());
+        //then
+        writerMock.write("should throw IOException");
     }
 }

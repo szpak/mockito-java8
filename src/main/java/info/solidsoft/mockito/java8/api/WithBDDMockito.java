@@ -77,14 +77,14 @@ public interface WithBDDMockito extends WithMockito {
     }
 
     /**
-     * Delegates call to {@link BDDMockito#willThrow(Throwable)}
+     * Delegates call to {@link BDDMockito#willThrow(Throwable...)}
      */
-    default BDDMockito.BDDStubber willThrow(Throwable toBeThrown) {
+    default BDDMockito.BDDStubber willThrow(Throwable... toBeThrown) {
         return BDDMockito.willThrow(toBeThrown);
     }
 
     /**
-     * Delegates call to {@link BDDMockito#doThrow(Throwable)}
+     * Delegates call to {@link BDDMockito#willThrow(Class)}
      */
     default BDDMockito.BDDStubber willThrow(Class<? extends Throwable> toBeThrown) {
         return BDDMockito.willThrow(toBeThrown);
@@ -109,6 +109,13 @@ public interface WithBDDMockito extends WithMockito {
      */
     default BDDMockito.BDDStubber willReturn(Object toBeReturned) {
         return BDDMockito.willReturn(toBeReturned);
+    }
+
+    /**
+     * Delegates call to {@link BDDMockito#doReturn(Object, Object...)}
+     */
+    default BDDMockito.BDDStubber willReturn(Object toBeReturned, Object... toBeReturnedNext) {
+        return BDDMockito.willReturn(toBeReturned, toBeReturnedNext);
     }
 
     /**

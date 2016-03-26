@@ -173,9 +173,9 @@ public interface WithMockito extends WithMatchers {
     }
 
     /**
-     * Delegates call to {@link Mockito#doThrow(Throwable)}.
+     * Delegates call to {@link Mockito#doThrow(Throwable...)}.
      */
-    default Stubber doThrow(Throwable toBeThrown) {
+    default Stubber doThrow(Throwable... toBeThrown) {
         return Mockito.doThrow(toBeThrown);
     }
 
@@ -212,6 +212,13 @@ public interface WithMockito extends WithMatchers {
      */
     default Stubber doReturn(Object toBeReturned) {
         return Mockito.doReturn(toBeReturned);
+    }
+
+    /**
+     * Delegates call to {@link Mockito#doReturn(Object, Object...)}.
+     */
+    default Stubber doReturn(Object toBeReturned, Object... toBeReturnedNext) {
+        return Mockito.doReturn(toBeReturned, toBeReturnedNext);
     }
 
     /**
