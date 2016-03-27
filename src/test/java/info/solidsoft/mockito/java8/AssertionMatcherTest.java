@@ -8,11 +8,14 @@ package info.solidsoft.mockito.java8;
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,5 +77,19 @@ public class AssertionMatcherTest {
                         "ts.findNumberOfShipsInRangeByCriteria(\n" +
                         "    ShipSearchCriteria{minimumRange=1000, numberOfPhasers=4}\n" +
                         ");");
+    }
+
+    @Ignore("Open issue")
+    @Test   //Issue #5
+    public void shouldCallLambdaOnlyOnce() {
+        //given
+        AtomicInteger counter = new AtomicInteger();
+        ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
+        //when
+        verify(ts).findNumberOfShipsInRangeByCriteria(assertArg(sc -> {
+            counter.incrementAndGet();
+        }));
+        //then
+        assertThat(counter.get()).isEqualTo(1);
     }
 }
