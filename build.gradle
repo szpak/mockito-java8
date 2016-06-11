@@ -24,10 +24,10 @@ scmVersion {
     ignoreUncommittedChanges = false
     versionIncrementer 'incrementPrerelease'
     hooks {
-        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /'info\.solidsoft\.mockito:mockito-java8:.*'/},
-                           replacement: {v, p -> "\'info.solidsoft.mockito:mockito-java8:$v\'"}]
-        pre 'fileUpdate', [file: 'README.md', pattern: {v, p -> /<version>.*<\/version>/},
-                           replacement: {v, p -> "<version>$v</version>"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /'info\.solidsoft\.mockito:mockito-java8:$v'/},
+                           replacement: {v, c -> "'info.solidsoft.mockito:mockito-java8:$v'"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /<version>$v<\/version>$/},
+                           replacement: {v, c -> "<version>$v</version>"}]
     }
 }
 
