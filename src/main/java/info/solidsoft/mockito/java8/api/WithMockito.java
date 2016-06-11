@@ -11,7 +11,6 @@ import org.mockito.MockSettings;
 import org.mockito.MockingDetails;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-import org.mockito.stubbing.DeprecatedOngoingStubbing;
 import org.mockito.stubbing.OngoingStubbing;
 import org.mockito.stubbing.Stubber;
 import org.mockito.verification.VerificationAfterDelay;
@@ -121,13 +120,6 @@ public interface WithMockito extends WithMatchers {
     @Incubating
     default <T> T spy(Class<T> classToSpy) {
         return Mockito.spy(classToSpy);
-    }
-
-    /**
-     * Delegates call to {@link Mockito#stub(Object)}.
-     */
-    default <T> DeprecatedOngoingStubbing<T> stub(T methodCall) {
-        return Mockito.stub(methodCall);
     }
 
     /**
