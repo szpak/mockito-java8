@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 /**
  * Extended version of HandyReturnValues which can resolve safe return type also for Consumer argument.
  *
- * Under the hood it uses TypeTools library which is used to work also for priomitive argument types (to not throw NullPointerException.
+ * Under the hood it uses TypeTools library which is used to work also for priomitive argument types (to not throw NullPointerException).
  *
  * @author Marcin Zajączkowski
  */
