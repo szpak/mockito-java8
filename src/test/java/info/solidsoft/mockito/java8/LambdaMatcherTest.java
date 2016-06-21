@@ -39,8 +39,7 @@ public class LambdaMatcherTest {
         //and
         verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new ArgumentMatcher<ShipSearchCriteria>() {
             @Override
-            public boolean matches(Object item) {
-                ShipSearchCriteria criteria = (ShipSearchCriteria) item;
+            public boolean matches(ShipSearchCriteria criteria) {
                 return criteria.getMinimumRange() < 2000 && criteria.getNumberOfPhasers() > 2;
             }
 
@@ -81,8 +80,7 @@ public class LambdaMatcherTest {
     //TODO: 2000 -> 2 0 0 0 - useful anywhere? - worth to implement?
     private static class MoreThan2ShipsCloserThan2000 implements ArgumentMatcher<ShipSearchCriteria> {
         @Override
-        public boolean matches(Object item) {
-            ShipSearchCriteria criteria = (ShipSearchCriteria) item;
+        public boolean matches(ShipSearchCriteria criteria) {
             return criteria.getMinimumRange() < 2000 && criteria.getNumberOfPhasers() > 2;
         }
     }

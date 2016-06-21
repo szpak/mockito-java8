@@ -98,7 +98,7 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
     }
 
     @Override
-    public boolean matches(Object item) {
+    public boolean matches(T item) {
         return backendMatcher.matches(item);
     }
 
