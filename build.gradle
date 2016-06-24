@@ -34,7 +34,7 @@ scmVersion {
 project.group = "info.solidsoft.mockito"
 project.version = scmVersion.version
 
-ext.mockitoVersion = findProperty('mockitoVersion') ?: '[2.0.22-beta, 2.0.70-beta]'
+ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.0.70-beta'
 
 sourceCompatibility = 1.8
 
