@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2015 Marcin Zajączkowski.
  *
  * Licensed under the Apache License, Version 2.0.
@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)

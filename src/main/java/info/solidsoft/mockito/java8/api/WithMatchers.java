@@ -6,7 +6,7 @@
 package info.solidsoft.mockito.java8.api;
 
 import org.mockito.ArgumentMatcher;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,366 +30,413 @@ import java.util.Set;
 interface WithMatchers {
 
     /**
-     * Delegates call to {@link Matchers#anyBoolean())}.
+     * Delegates call to {@link ArgumentMatchers#anyBoolean())}.
      */
     default boolean anyBoolean() {
-        return Matchers.anyBoolean();
+        return ArgumentMatchers.anyBoolean();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyByte())}.
+     * Delegates call to {@link ArgumentMatchers#anyByte())}.
      */
     default byte anyByte() {
-        return Matchers.anyByte();
+        return ArgumentMatchers.anyByte();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyChar())}.
+     * Delegates call to {@link ArgumentMatchers#anyChar())}.
      */
     default char anyChar() {
-        return Matchers.anyChar();
+        return ArgumentMatchers.anyChar();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyInt())}.
+     * Delegates call to {@link ArgumentMatchers#anyInt())}.
      */
     default int anyInt() {
-        return Matchers.anyInt();
+        return ArgumentMatchers.anyInt();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyLong())}.
+     * Delegates call to {@link ArgumentMatchers#anyLong())}.
      */
     default long anyLong() {
-        return Matchers.anyLong();
+        return ArgumentMatchers.anyLong();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyFloat())}.
+     * Delegates call to {@link ArgumentMatchers#anyFloat())}.
      */
     default float anyFloat() {
-        return Matchers.anyFloat();
+        return ArgumentMatchers.anyFloat();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyDouble())}.
+     * Delegates call to {@link ArgumentMatchers#anyDouble())}.
      */
     default double anyDouble() {
-        return Matchers.anyDouble();
+        return ArgumentMatchers.anyDouble();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyShort())}.
+     * Delegates call to {@link ArgumentMatchers#anyShort())}.
      */
     default short anyShort() {
-        return Matchers.anyShort();
+        return ArgumentMatchers.anyShort();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyObject())}.
+     * Delegates call to {@link ArgumentMatchers#anyObject())}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> T anyObject() {
-        return Matchers.anyObject();
+        return ArgumentMatchers.anyObject();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyVararg())}.
+     * Delegates call to {@link ArgumentMatchers#anyVararg())}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> T anyVararg() {
-        return Matchers.anyVararg();
+        return ArgumentMatchers.anyVararg();
     }
 
     /**
-     * Delegates call to {@link Matchers#any(Class)}.
+     * Delegates call to {@link ArgumentMatchers#any(Class)}.
      */
     default <T> T any(Class<T> clazz) {
-        return Matchers.any(clazz);
+        return ArgumentMatchers.any(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#any())}.
+     * Delegates call to {@link ArgumentMatchers#any())}.
      */
     default <T> T any() {
-        return Matchers.any();
+        return ArgumentMatchers.any();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyString())}.
+     * Delegates call to {@link ArgumentMatchers#anyString())}.
      */
     default String anyString() {
-        return Matchers.anyString();
+        return ArgumentMatchers.anyString();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyList())}.
+     * Delegates call to {@link ArgumentMatchers#anyList())}.
      */
-    default List anyList() {
-        return Matchers.anyList();
+    default <T> List<T> anyList() {
+        return ArgumentMatchers.anyList();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyListOf(Class)}.
+     * Delegates call to {@link ArgumentMatchers#anyListOf(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> List<T> anyListOf(Class<T> clazz) {
-        return Matchers.anyListOf(clazz);
+        return ArgumentMatchers.anyListOf(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#anySet())}.
+     * Delegates call to {@link ArgumentMatchers#anySet())}.
      */
-    default Set anySet() {
-        return Matchers.anySet();
+    default <T> Set<T> anySet() {
+        return ArgumentMatchers.anySet();
     }
 
     /**
-     * Delegates call to {@link Matchers#anySetOf(Class)}.
+     * Delegates call to {@link ArgumentMatchers#anySetOf(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> Set<T> anySetOf(Class<T> clazz) {
-        return Matchers.anySetOf(clazz);
+        return ArgumentMatchers.anySetOf(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#anyMap())}.
+     * Delegates call to {@link ArgumentMatchers#anyMap())}.
      */
-    default Map anyMap() {
-        return Matchers.anyMap();
+    default <K, V> Map<K, V> anyMap() {
+        return ArgumentMatchers.anyMap();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyMapOf(Class, Class)}.
+     * Delegates call to {@link ArgumentMatchers#anyMapOf(Class, Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <K, V>  Map<K, V> anyMapOf(Class<K> keyClazz, Class<V> valueClazz) {
-        return Matchers.anyMapOf(keyClazz, valueClazz);
+        return ArgumentMatchers.anyMapOf(keyClazz, valueClazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#anyCollection())}.
+     * Delegates call to {@link ArgumentMatchers#anyCollection())}.
      */
-    default Collection anyCollection() {
-        return Matchers.anyCollection();
+    default <T> Collection<T> anyCollection() {
+        return ArgumentMatchers.anyCollection();
     }
 
     /**
-     * Delegates call to {@link Matchers#anyCollectionOf(Class)}.
+     * Delegates call to {@link ArgumentMatchers#anyCollectionOf(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> Collection<T> anyCollectionOf(Class<T> clazz) {
-        return Matchers.anyCollectionOf(clazz);
+        return ArgumentMatchers.anyCollectionOf(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#isA(Class)}.
+     * Delegates call to {@link ArgumentMatchers#anyIterable()}.
+     *
+     * @since 2.0.0
+     */
+    default <T> Iterable<T> anyIterable() {
+        return ArgumentMatchers.anyIterable();
+    }
+
+    /**
+     * Delegates call to {@link ArgumentMatchers#anyIterableOf(Class)}.
+     *
+     * @since 2.0.0
+     * @deprecated This will be removed in Mockito 3.0.
+     */
+    @Deprecated
+    default <T> Iterable<T> anyIterableOf(Class<T> clazz) {
+        return ArgumentMatchers.anyIterableOf(clazz);
+    }
+
+    /**
+     * Delegates call to {@link ArgumentMatchers#isA(Class)}.
      */
     default <T> T isA(Class<T> clazz) {
-        return Matchers.isA(clazz);
+        return ArgumentMatchers.isA(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(boolean)}.
+     * Delegates call to {@link ArgumentMatchers#eq(boolean)}.
      */
     default boolean eq(boolean value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(byte)}.
+     * Delegates call to {@link ArgumentMatchers#eq(byte)}.
      */
     default byte eq(byte value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(char)}.
+     * Delegates call to {@link ArgumentMatchers#eq(char)}.
      */
     default char eq(char value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(double)}.
+     * Delegates call to {@link ArgumentMatchers#eq(double)}.
      */
     default double eq(double value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(float)}.
+     * Delegates call to {@link ArgumentMatchers#eq(float)}.
      */
     default float eq(float value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(int)}.
+     * Delegates call to {@link ArgumentMatchers#eq(int)}.
      */
     default int eq(int value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(long)}.
+     * Delegates call to {@link ArgumentMatchers#eq(long)}.
      */
     default long eq(long value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(short)}.
+     * Delegates call to {@link ArgumentMatchers#eq(short)}.
      */
     default short eq(short value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#eq(T)}.
+     * Delegates call to {@link ArgumentMatchers#eq(T)}.
      */
     default <T> T eq(T value) {
-        return Matchers.eq(value);
+        return ArgumentMatchers.eq(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#refEq(T, String...))}.
+     * Delegates call to {@link ArgumentMatchers#refEq(T, String...))}.
      */
     default <T> T refEq(T value, String... excludeFields) {
-        return Matchers.refEq(value, excludeFields);
+        return ArgumentMatchers.refEq(value, excludeFields);
     }
 
     /**
-     * Delegates call to {@link Matchers#same(T)}.
+     * Delegates call to {@link ArgumentMatchers#same(T)}.
      */
     default <T> T same(T value) {
-        return Matchers.same(value);
+        return ArgumentMatchers.same(value);
     }
 
     /**
-     * Delegates call to {@link Matchers#isNull())}.
+     * Delegates call to {@link ArgumentMatchers#isNull())}.
      */
-    default Object isNull() {
-        return Matchers.isNull();
+    default <T> T isNull() {
+        return ArgumentMatchers.isNull();
     }
 
     /**
-     * Delegates call to {@link Matchers#isNull(Class)}.
+     * Delegates call to {@link ArgumentMatchers#isNull(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> T isNull(Class<T> clazz) {
-        return Matchers.isNull(clazz);
+        return ArgumentMatchers.isNull(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#notNull())}.
+     * Delegates call to {@link ArgumentMatchers#notNull())}.
      */
-    default Object notNull() {
-        return Matchers.notNull();
+    default <T> T notNull() {
+        return ArgumentMatchers.notNull();
     }
 
     /**
-     * Delegates call to {@link Matchers#notNull(Class)}.
+     * Delegates call to {@link ArgumentMatchers#notNull(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> T notNull(Class<T> clazz) {
-        return Matchers.notNull(clazz);
+        return ArgumentMatchers.notNull(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#isNotNull())}.
+     * Delegates call to {@link ArgumentMatchers#isNotNull())}.
      */
-    default Object isNotNull() {
-        return Matchers.isNotNull();
+    default <T> T isNotNull() {
+        return ArgumentMatchers.isNotNull();
     }
 
     /**
-     * Delegates call to {@link Matchers#isNotNull(Class)}.
+     * Delegates call to {@link ArgumentMatchers#isNotNull(Class)}.
+     *
+     * @deprecated This will be removed in Mockito 3.0.
      */
+    @Deprecated
     default <T> T isNotNull(Class<T> clazz) {
-        return Matchers.isNotNull(clazz);
+        return ArgumentMatchers.isNotNull(clazz);
     }
 
     /**
-     * Delegates call to {@link Matchers#contains(String)}.
+     * Delegates call to {@link ArgumentMatchers#contains(String)}.
      */
     default String contains(String substring) {
-        return Matchers.contains(substring);
+        return ArgumentMatchers.contains(substring);
     }
 
     /**
-     * Delegates call to {@link Matchers#matches(String)}.
+     * Delegates call to {@link ArgumentMatchers#matches(String)}.
      */
     default String matches(String regex) {
-        return Matchers.matches(regex);
+        return ArgumentMatchers.matches(regex);
     }
 
     /**
-     * Delegates call to {@link Matchers#endsWith(String)}.
+     * Delegates call to {@link ArgumentMatchers#endsWith(String)}.
      */
     default String endsWith(String suffix) {
-        return Matchers.endsWith(suffix);
+        return ArgumentMatchers.endsWith(suffix);
     }
 
     /**
-     * Delegates call to {@link Matchers#startsWith(String)}.
+     * Delegates call to {@link ArgumentMatchers#startsWith(String)}.
      */
     default String startsWith(String prefix) {
-        return Matchers.startsWith(prefix);
+        return ArgumentMatchers.startsWith(prefix);
     }
 
     /**
-     * Delegates call to {@link Matchers#argThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#argThat(ArgumentMatcher)}.
      */
     default <T> T argThat(ArgumentMatcher<T> matcher) {
-        return Matchers.argThat(matcher);
+        return ArgumentMatchers.argThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#charThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#charThat(ArgumentMatcher)}.
      */
     default char charThat(ArgumentMatcher<Character> matcher) {
-        return Matchers.charThat(matcher);
+        return ArgumentMatchers.charThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#booleanThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#booleanThat(ArgumentMatcher)}.
      */
     default boolean booleanThat(ArgumentMatcher<Boolean> matcher) {
-        return Matchers.booleanThat(matcher);
+        return ArgumentMatchers.booleanThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#byteThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#byteThat(ArgumentMatcher)}.
      */
     default byte byteThat(ArgumentMatcher<Byte> matcher) {
-        return Matchers.byteThat(matcher);
+        return ArgumentMatchers.byteThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#shortThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#shortThat(ArgumentMatcher)}.
      */
     default short shortThat(ArgumentMatcher<Short> matcher) {
-        return Matchers.shortThat(matcher);
+        return ArgumentMatchers.shortThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#intThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#intThat(ArgumentMatcher)}.
      */
     default int intThat(ArgumentMatcher<Integer> matcher) {
-        return Matchers.intThat(matcher);
+        return ArgumentMatchers.intThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#longThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#longThat(ArgumentMatcher)}.
      */
     default long longThat(ArgumentMatcher<Long> matcher) {
-        return Matchers.longThat(matcher);
+        return ArgumentMatchers.longThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#floatThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#floatThat(ArgumentMatcher)}.
      */
     default float floatThat(ArgumentMatcher<Float> matcher) {
-        return Matchers.floatThat(matcher);
+        return ArgumentMatchers.floatThat(matcher);
     }
 
     /**
-     * Delegates call to {@link Matchers#doubleThat(ArgumentMatcher)}.
+     * Delegates call to {@link ArgumentMatchers#doubleThat(ArgumentMatcher)}.
      */
     default double doubleThat(ArgumentMatcher<Double> matcher) {
-        return Matchers.doubleThat(matcher);
+        return ArgumentMatchers.doubleThat(matcher);
     }
 }

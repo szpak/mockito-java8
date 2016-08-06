@@ -28,7 +28,7 @@ public interface WithAdditionalMatchers {
     /**
      * Delegates call to {@link AdditionalMatchers#geq(Comparable)}.
      */
-    default <T extends Comparable<T>> T geq(Comparable<T> value) {
+    default <T extends Comparable<T>> T geq(T value) {
         return AdditionalMatchers.geq(value);
     }
 
@@ -77,7 +77,7 @@ public interface WithAdditionalMatchers {
     /**
      * Delegates call to {@link AdditionalMatchers#leq(Comparable)}.
      */
-    default <T extends Comparable<T>> T leq(Comparable<T> value) {
+    default <T extends Comparable<T>> T leq(T value) {
         return AdditionalMatchers.leq(value);
     }
 
@@ -126,7 +126,7 @@ public interface WithAdditionalMatchers {
     /**
      * Delegates call to {@link AdditionalMatchers#gt(Comparable)}.
      */
-    default <T extends Comparable<T>> T gt(Comparable<T> value) {
+    default <T extends Comparable<T>> T gt(T value) {
         return AdditionalMatchers.gt(value);
     }
 
@@ -175,7 +175,7 @@ public interface WithAdditionalMatchers {
     /**
      * Delegates call to {@link AdditionalMatchers#lt(Comparable)}.
      */
-    default <T extends Comparable<T>> T lt(Comparable<T> value) {
+    default <T extends Comparable<T>> T lt(T value) {
         return AdditionalMatchers.lt(value);
     }
 
@@ -224,7 +224,7 @@ public interface WithAdditionalMatchers {
     /**
      * Delegates call to {@link AdditionalMatchers#cmpEq(Comparable)}.
      */
-    default <T extends Comparable<T>> T cmpEq(Comparable<T> value) {
+    default <T extends Comparable<T>> T cmpEq(T value) {
         return AdditionalMatchers.cmpEq(value);
     }
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2015 Marcin Zajączkowski.
  *
  * Licensed under the Apache License, Version 2.0.
@@ -17,7 +17,7 @@ import org.mockito.stubbing.Answer;
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LambdaMatcherStubbingTest {

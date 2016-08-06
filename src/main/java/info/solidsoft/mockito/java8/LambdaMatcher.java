@@ -9,7 +9,7 @@ import org.mockito.ArgumentMatcher;
 
 import java.util.function.Predicate;
 
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 
 /**
  * Allows creating inlined argument matcher with a lambda expression.
