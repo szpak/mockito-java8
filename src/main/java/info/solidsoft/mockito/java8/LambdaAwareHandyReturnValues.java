@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2015 Marcin Zajączkowski.
  *
  * Licensed under the Apache License, Version 2.0.
