@@ -45,7 +45,7 @@ mockito-java8 jars are available in Maven Central.
 ### Gradle
 
 ```
-testCompile 'info.solidsoft.mockito:mockito-java8:2.0.0-beta.5'
+testCompile 'info.solidsoft.mockito:mockito-java8:2.0.0'
 ```
 
 ### Maven
@@ -54,7 +54,7 @@ testCompile 'info.solidsoft.mockito:mockito-java8:2.0.0-beta.5'
 <dependency>
     <groupId>info.solidsoft.mockito</groupId>
     <artifactId>mockito-java8</artifactId>
-    <version>2.0.0-beta.5</version>
+    <version>2.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
