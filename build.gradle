@@ -3,26 +3,22 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3'
-        classpath 'pl.allegro.tech.build:axion-release-plugin:1.3.3'
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+        classpath 'info.solidsoft.gradle:cdeliveryboy:0.3.0'
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'pl.allegro.tech.build.axion-release'
-apply plugin: 'com.bmuschko.nexus'
-apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'info.solidsoft.cdeliveryboy'
+
+cDeliveryBoy {
+    autoPromote = false
+}
+
+nexusStaging {
+    packageGroup = "info.solidsoft"
+}
 
 scmVersion {
-    tag {
-        prefix = 'release'
-        versionSeparator = '/'
-    }
-    createReleaseCommit = true
-    releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
-    ignoreUncommittedChanges = false
-    versionIncrementer 'incrementPrerelease'
     hooks {
         pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /'info\.solidsoft\.mockito:mockito-java8:$v'/},
                            replacement: {v, c -> "'info.solidsoft.mockito:mockito-java8:$v'"}]
@@ -48,11 +44,6 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.2.0'
-}
-
-nexusStaging {
-    packageGroup = "info.solidsoft"
-    stagingProfileId = "34a3a5beeaa96"
 }
 
 modifyPom {
@@ -96,4 +87,3 @@ if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
 }
-
