@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'osgi'
 apply plugin: 'info.solidsoft.cdeliveryboy'
 
 cDeliveryBoy {
