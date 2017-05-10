@@ -30,63 +30,63 @@ import java.util.Set;
 interface WithMatchers {
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyBoolean())}.
+     * Delegates call to {@link ArgumentMatchers#anyBoolean()}.
      */
     default boolean anyBoolean() {
         return ArgumentMatchers.anyBoolean();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyByte())}.
+     * Delegates call to {@link ArgumentMatchers#anyByte()}.
      */
     default byte anyByte() {
         return ArgumentMatchers.anyByte();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyChar())}.
+     * Delegates call to {@link ArgumentMatchers#anyChar()}.
      */
     default char anyChar() {
         return ArgumentMatchers.anyChar();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyInt())}.
+     * Delegates call to {@link ArgumentMatchers#anyInt()}.
      */
     default int anyInt() {
         return ArgumentMatchers.anyInt();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyLong())}.
+     * Delegates call to {@link ArgumentMatchers#anyLong()}.
      */
     default long anyLong() {
         return ArgumentMatchers.anyLong();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyFloat())}.
+     * Delegates call to {@link ArgumentMatchers#anyFloat()}.
      */
     default float anyFloat() {
         return ArgumentMatchers.anyFloat();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyDouble())}.
+     * Delegates call to {@link ArgumentMatchers#anyDouble()}.
      */
     default double anyDouble() {
         return ArgumentMatchers.anyDouble();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyShort())}.
+     * Delegates call to {@link ArgumentMatchers#anyShort()}.
      */
     default short anyShort() {
         return ArgumentMatchers.anyShort();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyObject())}.
+     * Delegates call to {@link ArgumentMatchers#anyObject()}.
      *
      * @deprecated This will be removed in Mockito 3.0.
      */
@@ -96,7 +96,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyVararg())}.
+     * Delegates call to {@link ArgumentMatchers#anyVararg()}.
      *
      * @deprecated This will be removed in Mockito 3.0.
      */
@@ -113,21 +113,21 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#any())}.
+     * Delegates call to {@link ArgumentMatchers#any()}.
      */
     default <T> T any() {
         return ArgumentMatchers.any();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyString())}.
+     * Delegates call to {@link ArgumentMatchers#anyString()}.
      */
     default String anyString() {
         return ArgumentMatchers.anyString();
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyList())}.
+     * Delegates call to {@link ArgumentMatchers#anyList()}.
      */
     default <T> List<T> anyList() {
         return ArgumentMatchers.anyList();
@@ -144,7 +144,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anySet())}.
+     * Delegates call to {@link ArgumentMatchers#anySet()}.
      */
     default <T> Set<T> anySet() {
         return ArgumentMatchers.anySet();
@@ -161,7 +161,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyMap())}.
+     * Delegates call to {@link ArgumentMatchers#anyMap()}.
      */
     default <K, V> Map<K, V> anyMap() {
         return ArgumentMatchers.anyMap();
@@ -178,7 +178,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#anyCollection())}.
+     * Delegates call to {@link ArgumentMatchers#anyCollection()}.
      */
     default <T> Collection<T> anyCollection() {
         return ArgumentMatchers.anyCollection();
@@ -285,7 +285,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#refEq(T, String...))}.
+     * Delegates call to {@link ArgumentMatchers#refEq(T, String...)}.
      */
     default <T> T refEq(T value, String... excludeFields) {
         return ArgumentMatchers.refEq(value, excludeFields);
@@ -299,7 +299,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#isNull())}.
+     * Delegates call to {@link ArgumentMatchers#isNull()}.
      */
     default <T> T isNull() {
         return ArgumentMatchers.isNull();
@@ -316,7 +316,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#notNull())}.
+     * Delegates call to {@link ArgumentMatchers#notNull()}.
      */
     default <T> T notNull() {
         return ArgumentMatchers.notNull();
@@ -333,7 +333,7 @@ interface WithMatchers {
     }
 
     /**
-     * Delegates call to {@link ArgumentMatchers#isNotNull())}.
+     * Delegates call to {@link ArgumentMatchers#isNotNull()}.
      */
     default <T> T isNotNull() {
         return ArgumentMatchers.isNotNull();
