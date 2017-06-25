@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'info.solidsoft.gradle:cdeliveryboy:0.3.0'
+        classpath 'info.solidsoft.gradle:cdeliveryboy:0.4.0'
     }
 }
 
@@ -12,7 +12,12 @@ apply plugin: 'osgi'
 apply plugin: 'info.solidsoft.cdeliveryboy'
 
 cDeliveryBoy {
-    autoPromote = false
+    tasks {
+        promoteRepositoryTask = "releaseRepository"
+    }
+    nexus {
+        autoPromote = false
+    }
 }
 
 nexusStaging {
@@ -20,6 +25,7 @@ nexusStaging {
 }
 
 scmVersion {
+    versionIncrementer 'incrementMinor'
     hooks {
         pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /'info\.solidsoft\.mockito:mockito-java8:$v'/},
                            replacement: {v, c -> "'info.solidsoft.mockito:mockito-java8:$v'"}]
