@@ -98,3 +98,17 @@ if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
 }
+
+if (hasProperty('changelogSync')) {
+
+    task syncChangelog(type: Exec) {
+        doFirst { logger.info("Synchronizing changelog with GitHub for version ${project.version}") }
+        commandLine 'chandler', 'push', "release/${project.version}", '--tag-prefix=release/'
+    }
+
+    syncChangelog {
+        onlyIf { ciBuild.isInReleaseMode }
+        mustRunAfter releaseRepository
+    }
+    ciBuild.dependsOn syncChangelog
+}
