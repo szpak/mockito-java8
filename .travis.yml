@@ -50,5 +50,4 @@ matrix:
   include:
     - jdk: oraclejdk8
     - jdk: oraclejdk9
-      # Extra flags to make Gradle <4.1 to work with Java 9 - https://github.com/gradle/gradle/issues/1095#issuecomment-308518082
-      env: SKIP_RELEASE=true JDK_JAVA_OPTIONS="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED"
+      env: SKIP_RELEASE=true
