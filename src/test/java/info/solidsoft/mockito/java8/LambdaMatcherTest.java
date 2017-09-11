@@ -57,7 +57,7 @@ public class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new HamcrestArgumentMatcher<>(    //TODO: Report issue with <> to JetBrains
+        verify(ts).findNumberOfShipsInRangeByCriteria(argThat(new HamcrestArgumentMatcher<>(
                 new CustomMatcher<ShipSearchCriteria>("ShipSearchCriteria minimumRange<2000 and numberOfPhasers>2") {
                     @Override
                     public boolean matches(Object item) {
