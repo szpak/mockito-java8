@@ -1,7 +1,3 @@
-# Required for Java 9
-dist: trusty
-group: beta
-
 language: groovy
 
 addons:
