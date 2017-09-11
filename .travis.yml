@@ -10,21 +10,25 @@ addons:
       - oracle-java8-installer
 
 before_install:
- - openssl aes-256-cbc -K $encrypted_68da27d62c62_key -iv $encrypted_68da27d62c62_iv
-   -in gradle/dk1.asc.enc -d | gpg --fast-import
- - "export GRADLE_OPTS='-Dorg.gradle.daemon=true -Dorg.gradle.project.signing.keyId=0694F057 -Dorg.gradle.project.signing.secretKeyRingFile=$HOME/.gnupg/secring.gpg -Dorg.gradle.project.signing.password='"
- - "export TRAVIS_COMMIT_MSG=$(git log --format=%B -n 1 $TRAVIS_COMMIT)"
- - git config user.email "szpak-ci@users.noreply.github.com"
- - git config user.name "Szpak CI Bot"
- # Chandler for release notes synchronization
- - ruby --version
- - rvm install 2.4.1
- - ruby --version
- - gem install --no-ri --no-rdoc chandler
+  # Secrets (including encrypted PGP key) are not available in PR - skip release configuration to do not fail build
+  - |
+    if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
+      # There is problem with aborting build on command in if failure - http://steven.casagrande.io/articles/travis-ci-and-if-statements/
+      openssl aes-256-cbc -K $encrypted_68da27d62c62_key -iv $encrypted_68da27d62c62_iv -in gradle/dk1.asc.enc -d | gpg --fast-import || travis_terminate 1
+      export GRADLE_OPTS='-Dorg.gradle.daemon=true -Dorg.gradle.project.signing.keyId=0694F057 -Dorg.gradle.project.signing.secretKeyRingFile=$HOME/.gnupg/secring.gpg -Dorg.gradle.project.signing.password='
+    fi;
+  - "export TRAVIS_COMMIT_MSG=$(git log --format=%B -n 1 $TRAVIS_COMMIT)"
+  - git config user.email "szpak-ci@users.noreply.github.com"
+  - git config user.name "Szpak CI Bot"
+  # Chandler for release notes synchronization
+  - ruby --version
+  - rvm install 2.4.1
+  - ruby --version
+  - gem install --no-ri --no-rdoc chandler
 
 install: true
 script:
- - ./gradlew prepareForCiBuild -s -i -Prelease.disableChecks && ./gradlew ciBuild -s -i -Prelease.disableChecks -PchangelogSync
+  - ./gradlew prepareForCiBuild -s -i -Prelease.disableChecks && ./gradlew ciBuild -s -i -Prelease.disableChecks -PchangelogSync
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
