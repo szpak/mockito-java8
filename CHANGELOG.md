@@ -1,5 +1,9 @@
 # mockito-java8 changelog
 
+## 2.2.0 - 2017-10-06
+
+ - Explicitly add JPMS module name to MANIFEST - #14
+
 ## 2.1.0 - 2017-06-25
 
  - Preliminary Java 9 support (with typetools upgrade to 0.5.0)
