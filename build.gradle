@@ -12,9 +12,9 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'osgi'
 apply plugin: 'com.toomuchcoding.uptodate'
 apply from: "$rootDir/gradle/cdeliveryboy-release.gradle"
+apply from: "$rootDir/gradle/manifest.gradle"
 
 ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.10.0'
 
@@ -26,28 +26,6 @@ tasks.withType(JavaCompile) {
 
 repositories {
     mavenCentral()
-}
-
-Date buildDateAndTime = new Date()
-ext.buildDate = buildDateAndTime.format('yyyy-MM-dd')
-ext.buildTime = buildDateAndTime.format('HH:mm:ss.SSSZ')
-
-jar {
-    manifest {
-        attributes(
-            'Created-By': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString(),
-            'Build-Date': buildDate,
-            'Build-Time': buildTime,
-            'Build-Revision': scmVersion.scmPosition.revision,
-            'Specification-Title': project.name,
-            'Specification-Version': project.version,
-            'Specification-Vendor': 'SolidSoft.info',
-            'Implementation-Title': project.name,
-            'Implementation-Version': project.version,
-            'Implementation-Vendor': 'SolidSoft.info',
-            'Automatic-Module-Name': 'info.solidsoft.mockito.mockito-java8'
-        )
-    }
 }
 
 dependencies {
