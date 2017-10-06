@@ -18,10 +18,12 @@ nexusStaging {
 scmVersion {
     versionIncrementer 'incrementMinor'
     hooks {
-        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /'info\.solidsoft\.mockito:mockito-java8:$v'/},
-                           replacement: {v, c -> "'info.solidsoft.mockito:mockito-java8:$v'"}]
-        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /<version>$v<\/version>$/},
-                           replacement: {v, c -> "<version>$v</version>"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {previousVersion, context -> /'info\.solidsoft\.mockito:mockito-java8:$previousVersion'/},
+                           replacement: {currentVersion, context -> "'info.solidsoft.mockito:mockito-java8:$currentVersion'"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {previousVersion, context -> /<version>$previousVersion<\/version>$/},
+                           replacement: {currentVersion, context -> "<version>$currentVersion</version>"}]
+        pre 'fileUpdate', [file       : 'CHANGELOG.md', pattern: { previousVersion, context -> /^##\ ${context.currentVersion}\ -\ Unreleased$/ },
+                           replacement: { currentVersion, context -> "## $currentVersion - ${new Date().format('yyyy-MM-dd')}" }]
     }
 }
 
