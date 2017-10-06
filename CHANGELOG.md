@@ -3,6 +3,7 @@
 ## 2.2.0 - 2017-10-06
 
  - Explicitly add JPMS module name to MANIFEST - #14
+ - Upgrade default Mockito dependency to 2.10.0
  - Upgrade Gradle wrapper to 4.2.1
 
 ## 2.1.0 - 2017-06-25
