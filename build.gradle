@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'info.solidsoft.gradle:cdeliveryboy:0.4.0'
+        classpath 'info.solidsoft.gradle:cdeliveryboy:0.8.0'
         classpath('com.toomuchcoding:uptodate-gradle-plugin:1.0.1') {
             //Workaround: 0.7.2 is not available in Maven Central - https://github.com/marcingrzejszczak/uptodate-gradle-plugin/issues/2
             exclude group: 'org.codehaus.groovy.modules.http-builder', module: 'http-builder'
