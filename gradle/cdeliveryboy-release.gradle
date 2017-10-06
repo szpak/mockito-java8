@@ -1,0 +1,83 @@
+//Continuous Delivery release configuration with CDeliveryBoy
+
+apply plugin: 'info.solidsoft.cdeliveryboy'
+
+cDeliveryBoy {
+    tasks {
+        promoteRepositoryTask = "releaseRepository"
+    }
+    nexus {
+        autoPromote = true
+    }
+}
+
+nexusStaging {
+    packageGroup = "info.solidsoft"
+}
+
+scmVersion {
+    versionIncrementer 'incrementMinor'
+    hooks {
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /'info\.solidsoft\.mockito:mockito-java8:$v'/},
+                           replacement: {v, c -> "'info.solidsoft.mockito:mockito-java8:$v'"}]
+        pre 'fileUpdate', [file: 'README.md', pattern: {v, c -> /<version>$v<\/version>$/},
+                           replacement: {v, c -> "<version>$v</version>"}]
+    }
+}
+
+project.group = "info.solidsoft.mockito"
+//Beware: All release/version related changes should be put before that line which triggers (lazy) version evaluation
+project.version = scmVersion.version
+
+String repoSlug = 'mockito-java8'
+modifyPom {
+    project {
+        name 'Mockito-Java8'
+        description 'Mockito add-ons leveraging Java 8 and lambda expressions to make mocking even more compact'
+        url 'https://github.com/szpak/mockito-java8'
+        inceptionYear '2015'
+
+        scm {
+            url "https://github.com/$repoSlug"
+            connection "scm:https://github.com/$repoSlug"
+            developerConnection "scm:git://github.com/$repoSlug"
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'szpak'
+                name 'Marcin Zajączkowski'
+                email 'mszpak ATT wp DOTT pl'
+                roles {
+                    role 'developer'
+                    role 'despot'
+                }
+            }
+        }
+    }
+}
+
+if (hasProperty('changelogSync')) {
+
+    task syncChangelog(type: Exec) {
+        doFirst { logger.info("Synchronizing changelog with GitHub for version ${project.version}") }
+        commandLine 'chandler', 'push', "release/${project.version}", '--tag-prefix=release/'
+    }
+
+    syncChangelog {
+        onlyIf { ciBuild.isInReleaseMode }
+        mustRunAfter releaseRepository
+        if (project.tasks.findByName("publishPlugins")) {
+            mustRunAfter publishPlugins
+        }
+    }
+    ciBuild.dependsOn syncChangelog
+}
