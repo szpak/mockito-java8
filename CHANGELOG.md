@@ -1,6 +1,6 @@
 # mockito-java8 changelog
 
-## 2.2.0 - Unreleased
+## 2.2.0 - 2017-10-07
 
  - Explicitly add JPMS module name to MANIFEST - #14
  - Upgrade default Mockito dependency to 2.10.0
