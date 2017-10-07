@@ -223,6 +223,17 @@ therefore cannot be implemented as an add-on. A good news is that [Mockito 3.0](
 Java 8 making it all possible. 
 
 
+## Java 9 compatibility
+
+The project is automatically tested with Java 9 in the CI environment. At least the base scenarios should work with Java 9. Feel free to report an [issue](https://github.com/szpak/mockito-java8/issues/) if you encounter any mockito-java8 specific problem.
+
+The project's JAR artifact contains an Automatic-Module-Name manifest attribute. It's value - `info.solidsoft.mockito.mockito-java8` - is used
+as the name of the automatic module defined by that JAR file when it is placed on the Java 9 module path. This allows to explicitly require
+mockito-java8 in other projects.
+
+The mockito-java8 dependencies itself will be declared explicitly once available in required projects.
+
+
 ## Additional information 
 
 mockito-java8 has been written by Marcin Zajączkowski. The author can be contacted directly via email: mszpak ATT wp DOTT pl.
