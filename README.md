@@ -225,7 +225,7 @@ Java 8 making it all possible.
 
 ## Java 9 compatibility
 
-The project is automatically tested with Java 9 in the CI environment. At least the base scenarios should work with Java 9. Feel free to report an [issue](https://github.com/szpak/mockito-java8/issues/) if you encounter any mockito-java8 specific problem.
+The project is automatically tested with Java 9 (and Java 10) in the CI environment. At least the base scenarios should work with Java 9. Feel free to report an [issue](https://github.com/szpak/mockito-java8/issues/) if you encounter any mockito-java8 specific problem.
 
 The project's JAR artifact contains an Automatic-Module-Name manifest attribute. It's value - `info.solidsoft.mockito.mockito-java8` - is used
 as the name of the automatic module defined by that JAR file when it is placed on the Java 9 module path. This allows to explicitly require
