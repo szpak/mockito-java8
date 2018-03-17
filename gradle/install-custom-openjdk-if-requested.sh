@@ -18,6 +18,9 @@ if [ -n "${CUSTOM_JAVA_VERSION}" ]; then
   ls "${CUSTOM_JAVA_BASE_DIR}"
   export JAVA_HOME="${CUSTOM_JAVA_BASE_DIR}/jdk-${MAJOR_VERSION}"
   export PATH=${JAVA_HOME}/bin:${PATH}
+  # Link to system certificates to prevent: SunCertPathBuilderException: unable to find valid certification path to requested target
+  mv "${JAVA_HOME}/lib/security/cacerts" "${JAVA_HOME}/lib/security/cacerts.jdk"
+  ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
   java -Xmx32m -version
 else
   echo "Skipping custom Java installation."
