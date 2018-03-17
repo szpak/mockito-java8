@@ -1,5 +1,11 @@
 # mockito-java8 changelog
 
+## 2.3.0 - Unreleased
+
+ - Preliminary Java 10 support - #16
+ - Upgrade default Mockito dependency to 2.16.0
+ - Upgrade Gradle wrapper to 4.6
+
 ## 2.2.0 - 2017-10-07
 
  - Explicitly add JPMS module name to MANIFEST - #14
