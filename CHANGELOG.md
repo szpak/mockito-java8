@@ -1,6 +1,6 @@
 # mockito-java8 changelog
 
-## 2.3.0 - Unreleased
+## 2.3.0 - 2018-03-17
 
  - Preliminary Java 10 support - #16
  - Upgrade default Mockito dependency to 2.16.0
