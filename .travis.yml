@@ -52,3 +52,5 @@ matrix:
     # Ugly hack to manually install OpenJDK 10
     - jdk: oraclejdk8
       env: CUSTOM_JAVA_VERSION="10+46" CUSTOM_JAVA_PACKAGE_CHECKSUM=c851df838a51af52517b74e3a4b251d90c54cf478a4ebed99e7285ef134c3435 SKIP_RELEASE=true
+    - jdk: oraclejdk8
+      env: CUSTOM_JAVA_VERSION="11-ea+4" CUSTOM_JAVA_PACKAGE_CHECKSUM=2f9ecfae0146a81fb04aaeebbb0558981f8d6e953a19357dec08ef41c5540f8a SKIP_RELEASE=true
