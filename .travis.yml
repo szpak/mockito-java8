@@ -1,11 +1,8 @@
 language: groovy
 
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-
 before_install:
+  - . gradle/install-custom-openjdk-if-requested.sh
+  - java -Xmx32m -version
   # Secrets (including encrypted PGP key) are not available in PR - skip release configuration to do not fail build
   - |
     if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
@@ -21,6 +18,7 @@ before_install:
   - rvm install 2.4.1
   - ruby --version
   - gem install --no-ri --no-rdoc chandler
+  - ./gradlew --version
 
 install: true
 script:
@@ -51,3 +49,6 @@ matrix:
     - jdk: oraclejdk8
     - jdk: oraclejdk9
       env: SKIP_RELEASE=true
+    # Ugly hack to manually install OpenJDK 10
+    - jdk: oraclejdk8
+      env: CUSTOM_JAVA_VERSION="10+46" CUSTOM_JAVA_PACKAGE_CHECKSUM=c851df838a51af52517b74e3a4b251d90c54cf478a4ebed99e7285ef134c3435 SKIP_RELEASE=true
