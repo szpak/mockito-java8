@@ -47,7 +47,6 @@ matrix:
     - jdk: oraclejdk8
     - jdk: oraclejdk9
       env: SKIP_RELEASE=true
-    # Not yet available on Travis
     - jdk: oraclejdk10
       env: JDK='Oracle JDK 10' SKIP_RELEASE=true
     # Java 10 and 11 - https://sormuras.github.io/blog/2018-03-20-jdk-matrix.html
@@ -56,6 +55,7 @@ matrix:
     - env: JDK='OpenJDK 11' SKIP_RELEASE=true
       install: . gradle/install-jdk.sh -F 11 -L GPL -W ~/custom-java
   allow_failures:
-    - env: JDK='Oracle JDK 10'
+    # Not yet available on Travis
+    - env: JDK='Oracle JDK 10' SKIP_RELEASE=true
     # No supported by Gradle 4.6 - https://github.com/gradle/gradle/issues/4515
-    - env: JDK='OopenJDK 11'
+    - env: JDK='OpenJDK 11' SKIP_RELEASE=true
