@@ -1,8 +1,6 @@
 language: groovy
 
 before_install:
-  - . gradle/install-custom-openjdk-if-requested.sh
-  - java -Xmx32m -version
   # Secrets (including encrypted PGP key) are not available in PR - skip release configuration to do not fail build
   - |
     if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
@@ -18,10 +16,10 @@ before_install:
   - rvm install 2.4.1
   - ruby --version
   - gem install --no-ri --no-rdoc chandler
-  - ./gradlew --version
 
 install: true
 script:
+  - ./gradlew --version
   - ./gradlew prepareForCiBuild -s -i -Prelease.disableChecks && ./gradlew ciBuild -s -i -Prelease.disableChecks -PchangelogSync
 
 before_cache:
@@ -49,6 +47,15 @@ matrix:
     - jdk: oraclejdk8
     - jdk: oraclejdk9
       env: SKIP_RELEASE=true
-    # Ugly hack to manually install OpenJDK 10
-    - jdk: oraclejdk8
-      env: CUSTOM_JAVA_VERSION="10+46" CUSTOM_JAVA_PACKAGE_CHECKSUM=c851df838a51af52517b74e3a4b251d90c54cf478a4ebed99e7285ef134c3435 SKIP_RELEASE=true
+    # Not yet available on Travis
+    - jdk: oraclejdk10
+      env: JDK='Oracle JDK 10' SKIP_RELEASE=true
+    # Java 10 and 11 - https://sormuras.github.io/blog/2018-03-20-jdk-matrix.html
+    - env: JDK='OpenJDK 10' SKIP_RELEASE=true
+      install: . gradle/install-jdk.sh -F 10 -L GPL -W ~/custom-java
+    - env: JDK='OpenJDK 11' SKIP_RELEASE=true
+      install: . gradle/install-jdk.sh -F 11 -L GPL -W ~/custom-java
+  allow_failures:
+    - env: JDK='Oracle JDK 10'
+    # No supported by Gradle 4.6 - https://github.com/gradle/gradle/issues/4515
+    - env: JDK='OopenJDK 11'
