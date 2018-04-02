@@ -16,6 +16,8 @@ before_install:
   - rvm install 2.4.1
   - ruby --version
   - gem install --no-ri --no-rdoc chandler
+  # wget consumes 4K log lines on JDK downloading with TERM=dumb
+  - unset TERM
 
 install: true
 script:
