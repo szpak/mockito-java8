@@ -36,6 +36,8 @@
 #
 set -e
 
+echo "TERM: ${TERM}"
+
 JDK_FEATURE='11'
 JDK_BUILD='?'
 JDK_LICENSE='GPL'

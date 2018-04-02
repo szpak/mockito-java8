@@ -17,7 +17,7 @@ before_install:
   - ruby --version
   - gem install --no-ri --no-rdoc chandler
   # wget consumes 4K log lines on JDK downloading with TERM=dumb
-  - unset TERM
+  - export TERM=xterm
 
 install: true
 script:
