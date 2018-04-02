@@ -101,7 +101,7 @@ fi
 #
 mkdir -p ${JDK_WORKSPACE}
 cd ${JDK_WORKSPACE}
-wget wget --continue ${JDK_URL}
+wget --continue ${JDK_URL}
 tar -xzf ${JDK_ARCHIVE}
 cd -
 
