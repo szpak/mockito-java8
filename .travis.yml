@@ -3,7 +3,7 @@ sudo: false
 language: java
 
 before_install:
-  - export TERM=xterm 
+  - env
   - echo "TERM $TERM"
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
   - . ./install-jdk.sh -F 10 -L GPL -C
