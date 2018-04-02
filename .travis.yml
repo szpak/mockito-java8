@@ -1,63 +1,12 @@
+sudo: false
+  
 language: java
 
 before_install:
-  # Secrets (including encrypted PGP key) are not available in PR - skip release configuration to do not fail build
-  - |
-    if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
-      # There is problem with aborting build on command in if failure - http://steven.casagrande.io/articles/travis-ci-and-if-statements/
-      openssl aes-256-cbc -K $encrypted_68da27d62c62_key -iv $encrypted_68da27d62c62_iv -in gradle/dk1.asc.enc -d | gpg --fast-import || travis_terminate 1
-      export GRADLE_OPTS='-Dorg.gradle.daemon=true -Dorg.gradle.project.signing.keyId=0694F057 -Dorg.gradle.project.signing.secretKeyRingFile=$HOME/.gnupg/secring.gpg -Dorg.gradle.project.signing.password='
-    fi;
-  - "export TRAVIS_COMMIT_MSG=$(git log --format=%B -n 1 $TRAVIS_COMMIT)"
-  - git config user.email "szpak-ci@users.noreply.github.com"
-  - git config user.name "Szpak CI Bot"
-  # Chandler for release notes synchronization
-  - ruby --version
-  - rvm install 2.4.1
-  - ruby --version
-  - gem install --no-ri --no-rdoc chandler
-  # wget consumes 4K log lines on JDK downloading with TERM=dumb
-  - unset TERM
+  - echo "TERM $TERM"
+  - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
+  - . ./install-jdk.sh -F 10 -L GPL -C
 
 install: true
-script:
-  - ./gradlew --version
-  - ./gradlew prepareForCiBuild -s -i -Prelease.disableChecks && ./gradlew ciBuild -s -i -Prelease.disableChecks -PchangelogSync
+script: true
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -fr $HOME/.gradle/caches/*/scripts/
-  - rm -fr $HOME/.gradle/caches/*/scripts-remapped/
-  - rm -fr $HOME/.gradle/caches/*/fileHashes/
-  - rm -fr $HOME/.gradle/caches/transforms-1/transforms-1.lock
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.rvm/
-
-env:
-  global:
-  - secure: Z5GqUbePIpNIXSlT7eR+XiGJNMiCZA8hVeztjvkXbG4eBuUNp0aAkFsNWp+4AvEn6dmBBmFF7OMmrzj6poqWM7GkbevFnMeYewjla1TllRv/6KlvyvkHwGxIB/uD8etY+WR8fLi1054nfu9uG2FHLCfQaGt7OBL8sQtp8rFtFrNpHV+UL2YJenUSN+Ztz/RfgGpPXFa5iOyeNIez0e/jtNAktZq9hyroTsEEtH0Zf/AcF4CPjPJQHizxT78z4mMD4NFxXxZiOj5RZ52wYeGnPMcGhITFY7jd9ZdxlQW4u/UeJZ1KvlN26he2xpddrhsqn+ZFjSfJSYHc46di17AFm7t9XngAc5NoK3rvueRGaSczpRBxBTft0CKAx1E/tfp+W2D88pIKPbhH/qnofTYLqLUNIxZOMNOOqk8eUTBSId9bXULHH+5YTPUKt7ytxGZvendKCEHYVBoAxh6vvuBr1UG7ExR8X/kgkHtdWM0lVDDjjZMeR8xsgfeiyowayxUAq8bELW23A133E9zvSxYmhQeQvU9y1KUZk1VZp1MHQe/dLqe2LKrxASwMlR16lRpFp6jXBPK6KG6pNZUHGaX5Nd30AdbxrBmFUvtoWBb/z5KsazMxcjo/Fqmt36Uq3Noj2z2ln6ENTmt4Dvm+d+1Zfdt1g21F9V5gfZgfdAIGYsY=
-  - secure: C3R/cMmlI0MaJnc70Dh3zLM5e8ybyiCXR198wdgx67JKHH14lMeJ/1z20o3/0doy1dsdqIUo9jdCboHP5imQxg/1dheF0m5sy5WoBXIjpFM/+KK0XPlqeAteh7REzawi8EXoGknSS1CFOvwoM8URM72IBlG+AMLYe9h+j05kQ3a/Sscrame/i3/dHm28udUDx10CDa9JqbrIHrdK6M1DJTpobN68p/4fO6MEU48eVUfFv9DF3gOWbV9FtB3NkOx+xGEm7fgEiR7czSo5JKAFO1vUtZdLuio6780Ufvr2QG1kgrZLyhQarH/rzgxAsRLfqCgo8I9xor0MPtVMl2GNkD/+wLWNJ2uIT5LE/Da+lGck454e+YgXpgp3WK6w9kLquZQc3EpkjT9ugHYV4hj3R2eLuBTWk9Zs9HxynSCcGqNHK+dCbvekAA9kloX7FQhJlFUVg1w3uDfLxrG2f+sTLFyHz8heB+rNFFUDVfG7IJwkaUDZ7GbAkqApgE6WfZeE0hsIGqPFXwTzjAhiKBrLdoP5GbYdqN9RT3yNHw9+guFpsncNmYkUa3WAmZxvG64g9BguwFbMq/zARxjyLFKl+x+8126g502NVFT46CzHypKDB/9+/4Eb5BMM7qoT+Q1JPZBKpcPz1FhhKATBYVPXTAPOlXNIJre+8VYmNGkUYIA=
-  - secure: sCNfMTvn/ziW+SI7MWKpAuUKpx0Ah92KGU2DxgZloMmKQJ9l2Y75nHs1t4cgCkkDh4TYO4XLuFAH04fPS8WHQS2D6hLuKxTstO3wE7or4VeK/DOnm7uLjO4gK51BUcbN8ejcI6F5iM8zM3A4Dp/PT0bYBbPFmxBcS8aWohcGwzbwGxCV5/AcGdn37DdWJIbHfNtktJEVYkBXdvfyGiJt6mrS+XSBKLRM9PMEYY6zJPjCoIWNar/1pPFcgqgHSothHS/gCvWLudN35E4IxDgQICJ4YpKwHA4xdoCY9WHmI2qYUk7XXmr8aJG3LeCrTabnwtyPTsQYoeVz+CTraIVBLhc8bZfC5XfFN9rdjh9EML5bqUcGB2d4AdKBtaPVY29PQ2JCBgQAPqsaxFUPAkxmBHo4O6ELSAoOKIXpr1kybf718+S44SE5EqyVviZf5MdqMLPI3AgSxYTQi9yNGxqVOM99TGmUOdgB/daPBuIlJ08vqrGCliznQ7hZgLgp48pQlCMIsRpp953VGGxqDJadp2/aZenxpLqP3ZJ7IctWVDgMszqw82ufrn9Xuhrpk/wJrtmY5QgJU+/qKCP+TeJ6orDZY25D8alGyIKjJZNakVK43ZKaAW2laDc+6BT3nSQchDeZ8vkk6wXPPiEkO18xF7B/GZGi/NeHcqWle1lzxDI=
-  - secure: RLy6LUJkxhUI4NsQLKxGs4hdXwiAEGp9tvlfiuGtaAuLoQajDuaLDGtr1VrO9qjUvKkK4DVneu6dsyGxTjV6g+O+Zr8I9ybgaP+7GH75xuq+Eey1jKr+9aPm5OuWbgco1WC3YCTfyBPAOhAXU0Tx+HAJwAZMPRPp7W+nHAFToxBQg3m6mlMbRWnqtEYZ+ZVukKDYBatnJ7mFTAk0644f6spX170Z+X1BlNzK9rRhLfotwHej0EtFfuV8YJHHQutQou/kAf7keUL2Hg4v0TjNQfkqwutBHfRlwm7/Zm5sUUf5ZNuc/iKrgR2CnAGskpqVAYn1kSt4oKo2ckghUdRJLFehTWc0PLhM5mEeqFSYPqer6NXPSO7pcGYct6hzrpEP77lCKlPc61oyljDmHdWNHIlrhLNWoSeb3OI5PmPEJF8O/kRCZ4kOoNxe92poLfg3RbwvSGDl1SNOhxCEIjwj8BzWREYT6iYTXfk9PkkiCf8r3FBf2I5CdfySbLLz5yEibjBCkgVlzmOpFO1WNNbUjQuBqTPfl9eUnGqZYrYJpa2ZZOeoQgSfIFc+YU32W+MLsqq29PMHfhpP5kNJJhpbmmmWAqGF22Ocb1R2qUWgphuiscQdFTOPx4s1YzVQspmK/r4cITIPuUvKbG9Le7xFx4elOKYZtpMZuFMW3DkDjng=
-
-matrix:
-  include:
-    - jdk: oraclejdk8
-    - jdk: oraclejdk9
-      env: SKIP_RELEASE=true
-    - jdk: oraclejdk10
-      env: JDK='Oracle JDK 10' SKIP_RELEASE=true
-    # Java 10 and 11 - https://sormuras.github.io/blog/2018-03-20-jdk-matrix.html
-    - env: JDK='OpenJDK 10' SKIP_RELEASE=true
-      install: . gradle/install-jdk.sh -F 10 -L GPL -W ~/custom-java -C
-    - env: JDK='OpenJDK 11' SKIP_RELEASE=true
-      install: . gradle/install-jdk.sh -F 11 -L GPL -W ~/custom-java -C
-  allow_failures:
-    # Not yet available on Travis
-    - env: JDK='Oracle JDK 10' SKIP_RELEASE=true
-    # No supported by Gradle 4.6 - https://github.com/gradle/gradle/issues/4515
-    - env: JDK='OpenJDK 11' SKIP_RELEASE=true
