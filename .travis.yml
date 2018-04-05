@@ -59,3 +59,4 @@ matrix:
     - env: JDK='Oracle JDK 10' SKIP_RELEASE=true
     # No supported by Gradle 4.6 - https://github.com/gradle/gradle/issues/4515
     - env: JDK='OpenJDK 11' SKIP_RELEASE=true
+
