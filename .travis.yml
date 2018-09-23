@@ -54,6 +54,7 @@ matrix:
       install: . gradle/install-jdk.sh -F 10 -L GPL -W ~/custom-java -C
     - env: JDK='OpenJDK 11' SKIP_RELEASE=true
       install: . gradle/install-jdk.sh -F 11 -L GPL -W ~/custom-java -C
+    - jdk: openjdk11
   allow_failures:
     # Not yet available on Travis
     - env: JDK='Oracle JDK 10' SKIP_RELEASE=true
