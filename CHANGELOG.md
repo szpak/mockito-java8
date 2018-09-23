@@ -1,5 +1,11 @@
 # mockito-java8 changelog
 
+## 2.4.0 - Unreleased
+
+ - Preliminary Java 11 support - #17
+ - Upgrade default Mockito dependency to 2.22.0
+ - Upgrade Gradle wrapper to 4.10.2
+
 ## 2.3.0 - 2018-03-17
 
  - Preliminary Java 10 support - #16
