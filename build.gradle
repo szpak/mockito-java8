@@ -16,7 +16,7 @@ apply plugin: 'com.toomuchcoding.uptodate'
 apply from: "$rootDir/gradle/cdeliveryboy-release.gradle"
 apply from: "$rootDir/gradle/manifest.gradle"
 
-ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.16.0'
+ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.22.0'
 
 sourceCompatibility = 1.8
 
@@ -33,7 +33,7 @@ dependencies {
     compile 'net.jodah:typetools:0.5.0'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:3.9.1'
+    testCompile 'org.assertj:assertj-core:3.11.1'
 }
 
 //Disable JavaDoc doclint on Java 8 - it fails on invalid JavaDoc elements in mockito-core jar
