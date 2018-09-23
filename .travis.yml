@@ -45,9 +45,9 @@ env:
 matrix:
   include:
     - jdk: oraclejdk8
-    - jdk: openjdk9
+    - jdk: oraclejdk9
       env: SKIP_RELEASE=true
-    - jdk: openjdk10
+    - jdk: oraclejdk10
       env: SKIP_RELEASE=true
     - jdk: openjdk11
       env: SKIP_RELEASE=true
