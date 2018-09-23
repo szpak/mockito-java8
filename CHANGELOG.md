@@ -1,6 +1,6 @@
 # mockito-java8 changelog
 
-## 2.4.0 - Unreleased
+## 2.4.0 - 2018-09-23
 
  - Preliminary Java 11 support - #17
  - Upgrade default Mockito dependency to 2.22.0
