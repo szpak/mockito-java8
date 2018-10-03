@@ -139,4 +139,14 @@ public class LambdaMatcherTest {
                         ");");
 
     }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldAllowToUseAnyCheckedExceptionAsError() {
+        //when
+        int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
+        //then
+        assertThat(numberOfShips).isZero();
+        //and
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(c -> { throw new Exception("assertion failed"); }));
+    }
 }

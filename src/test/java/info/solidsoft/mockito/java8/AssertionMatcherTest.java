@@ -17,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)  //MockitoRule is not used to build also Mockito version before 1.10.17
@@ -74,5 +75,13 @@ public class AssertionMatcherTest {
                         "ts.findNumberOfShipsInRangeByCriteria(\n" +
                         "    ShipSearchCriteria{minimumRange=1000, numberOfPhasers=4}\n" +
                         ");");
+    }
+
+    @Test
+    public void shouldAllowToUseAnyExceptionAsFailedAssertion() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        verify(ts, never()).fireTorpedo(assertArg(i -> { throw new Exception("assertion failed"); }));
     }
 }

@@ -8,8 +8,6 @@ package info.solidsoft.mockito.java8;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 
-import java.util.function.Consumer;
-
 /**
  * Allows creating inlined ArgumentCaptor with a lambda expression.
  * <p>
@@ -39,7 +37,7 @@ import java.util.function.Consumer;
  * }
  *
  * AssertJ assertions (assertThat()) used in lambda generate meaningful error messages in face of failure, but any other assertion can be
- * used if needed/preffered.
+ * used if needed/preferred.
  *
  * @param <T> type of argument
  *
@@ -49,10 +47,10 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
-    private final Consumer<T> consumer;
+    private final CheckedConsumer<T> consumer;
     private String errorMessage;
 
-    private AssertionMatcher(Consumer<T> consumer) {
+    private AssertionMatcher(CheckedConsumer<T> consumer) {
         this.consumer = consumer;
     }
 
@@ -62,7 +60,7 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
         try {
             consumer.accept(argument);
             return true;
-        } catch (AssertionError e) {
+        } catch (AssertionError | Exception e) {
             errorMessage = e.getMessage();
             return false;
         }
@@ -73,7 +71,7 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
         return "AssertionMatcher reported: " + errorMessage;
     }
 
-    public static <T> T assertArg(Consumer<T> consumer) {
+    public static <T> T assertArg(CheckedConsumer<T> consumer) {
         Mockito.argThat(new AssertionMatcher<>(consumer));
         return handyReturnValues.returnForConsumerLambda(consumer);
     }

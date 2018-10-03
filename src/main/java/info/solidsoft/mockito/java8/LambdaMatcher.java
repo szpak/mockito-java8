@@ -7,8 +7,6 @@ package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
 
-import java.util.function.Predicate;
-
 import static org.mockito.ArgumentMatchers.argThat;
 
 /**
@@ -78,7 +76,7 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
     private final ArgumentMatcher<T> backendMatcher;    //TODO: Could it be done with just one matcher?
 
-    private LambdaMatcher(Predicate<T> lambda, String description) {
+    private LambdaMatcher(CheckedPredicate<T> lambda, String description) {
         this.backendMatcher = new ArgumentMatcher<T>() {
             @SuppressWarnings("unchecked")
             @Override
@@ -107,11 +105,11 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         return backendMatcher.toString();
     }
 
-    public static <T> T argLambda(Predicate<T> lambda) {
+    public static <T> T argLambda(CheckedPredicate<T> lambda) {
         return argLambda(lambda, "Inline lambda expression - add description in code to get more detailed error message");
     }
 
-    public static <T> T argLambda(Predicate<T> lambda, String description) {
+    public static <T> T argLambda(CheckedPredicate<T> lambda, String description) {
         return argThat(new LambdaMatcher<>(lambda, description));
     }
 }
