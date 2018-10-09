@@ -9,22 +9,32 @@ import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
 import org.hamcrest.CustomMatcher;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.IOException;
+
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambdaChecked;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.hamcrest.core.Is.isA;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LambdaMatcherTest {
+
+    private static final String UNEXPECTED_CHECKED_EXCEPTION_MESSAGE = "Unexpected checked exception";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     private TacticalStation ts;
@@ -141,13 +151,30 @@ public class LambdaMatcherTest {
 
     }
 
-    @Test(expected = RuntimeException.class)
-    public void shouldWrapAnyExceptionAsRuntimeException() {
+    @Test
+    public void shouldAcceptLambdaWhichMayThrowCheckedException() throws Exception {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> { throw new Exception("assertion failed"); }, "won't happen"));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(methodDeclaringThrowingCheckedException()));
+    }
+
+    @Test
+    public void shouldPropagateCheckedExceptionIfThrownInLambda() throws Exception {
+        //when
+        int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
+        //then
+        assertThat(numberOfShips).isZero();
+        //and
+        thrown.expect(RuntimeException.class);  //TODO: Replace with assertThorws() in JUnit 5
+        thrown.expectCause(isA(IOException.class));
+        thrown.expectMessage(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE);
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> { throw new IOException(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE); }));
+    }
+
+    private CheckedPredicate<ShipSearchCriteria> methodDeclaringThrowingCheckedException() throws Exception {
+        return c -> c.getMinimumRange() < 2000 && c.getNumberOfPhasers() > 2;
     }
 }

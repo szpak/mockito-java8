@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.argThat;
  *
  * <pre class="code"><code class="java">
  *{@literal @}Test
- * public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
+ * public void stubbingWithCustomAnswerShouldBeLonger() {  //old way
  *     //given
  *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
  *        {@literal @}Override
@@ -74,23 +74,19 @@ import static org.mockito.ArgumentMatchers.argThat;
  *
  * @author Marcin Zajączkowski
  */
+@SuppressWarnings("WeakerAccess")
 public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
     private final ArgumentMatcher<T> backendMatcher;    //TODO: Could it be done with just one matcher?
 
-    private LambdaMatcher(Predicate<T> lambda, CheckedPredicate<T> checkedLambda, String description) {
+    private LambdaMatcher(Predicate<T> lambda, String description) {
         this.backendMatcher = new ArgumentMatcher<T>() {
-            @SuppressWarnings("unchecked")
             @Override
-            public boolean matches(Object item) {
+            public boolean matches(T item) {
                 try {
-                    if (lambda != null) {
-                        return lambda.test((T) item);
-                    } else {
-                        return checkedLambda.test((T) item);
-                    }
+                    return lambda.test(item);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException(e); //Could be potentially tricked with CheckedPredicate.uncheck(), but kept for backward compatibility
                 }
             }
 
@@ -99,14 +95,6 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
                 return description;
             }
         };
-    }
-
-    private LambdaMatcher(Predicate<T> arg, String description) {
-        this(arg, null, description);
-    }
-
-    private LambdaMatcher(CheckedPredicate<T> arg, String description) {
-        this(null, arg, description);
     }
 
     @Override
@@ -127,7 +115,11 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         return argThat(new LambdaMatcher<>(lambda, description));
     }
 
+    public static <T> T argLambdaChecked(CheckedPredicate<T> lambda) {
+        return argLambda(lambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
+    }
+
     public static <T> T argLambdaChecked(CheckedPredicate<T> lambda, String description) {
-        return argThat(new LambdaMatcher<>(lambda, description));
+        return argThat(new LambdaMatcher<>(lambda.uncheck(), description));
     }
 }
