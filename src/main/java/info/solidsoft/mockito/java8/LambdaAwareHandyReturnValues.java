@@ -23,7 +23,7 @@ class LambdaAwareHandyReturnValues {
         return internalReturnForLambda(consumer, Consumer.class);
     }
 
-    <T> T returnForConsumerLambda(CheckedConsumer<T> checkedConsumer) {
+    <T> T returnForConsumerLambdaChecked(CheckedConsumer<T> checkedConsumer) {
         return internalReturnForLambda(checkedConsumer, CheckedConsumer.class);
     }
 
