@@ -17,6 +17,7 @@ import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
+import static info.solidsoft.mockito.java8.LambdaMatcher.argLambdaChecked;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -141,12 +142,12 @@ public class LambdaMatcherTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldAllowToUseAnyCheckedExceptionAsError() {
+    public void shouldWrapAnyExceptionAsRuntimeException() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argLambda(c -> { throw new Exception("assertion failed"); }));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> { throw new Exception("assertion failed"); }, "won't happen"));
     }
 }

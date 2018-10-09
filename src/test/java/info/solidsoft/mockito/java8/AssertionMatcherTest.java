@@ -15,9 +15,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
+import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgChecked;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)  //MockitoRule is not used to build also Mockito version before 1.10.17
@@ -77,11 +77,11 @@ public class AssertionMatcherTest {
                         ");");
     }
 
-    @Test
-    public void shouldAllowToUseAnyExceptionAsFailedAssertion() {
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapAnyExceptionAsRuntimeException() {
         //when
         ts.fireTorpedo(2);
         //then
-        verify(ts, never()).fireTorpedo(assertArg(i -> { throw new Exception("assertion failed"); }));
+        verify(ts).fireTorpedo(assertArgChecked(i -> { throw new Exception("assertion failed"); }));
     }
 }

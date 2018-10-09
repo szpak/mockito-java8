@@ -7,6 +7,8 @@ package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
 
+import java.util.function.Predicate;
+
 import static org.mockito.ArgumentMatchers.argThat;
 
 /**
@@ -76,13 +78,17 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
     private final ArgumentMatcher<T> backendMatcher;    //TODO: Could it be done with just one matcher?
 
-    private LambdaMatcher(CheckedPredicate<T> lambda, String description) {
+    private LambdaMatcher(Predicate<T> lambda, CheckedPredicate<T> checkedLambda, String description) {
         this.backendMatcher = new ArgumentMatcher<T>() {
             @SuppressWarnings("unchecked")
             @Override
             public boolean matches(Object item) {
                 try {
-                    return lambda.test((T)item);
+                    if (lambda != null) {
+                        return lambda.test((T) item);
+                    } else {
+                        return checkedLambda.test((T) item);
+                    }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -95,6 +101,14 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         };
     }
 
+    private LambdaMatcher(Predicate<T> arg, String description) {
+        this(arg, null, description);
+    }
+
+    private LambdaMatcher(CheckedPredicate<T> arg, String description) {
+        this(null, arg, description);
+    }
+
     @Override
     public boolean matches(T item) {
         return backendMatcher.matches(item);
@@ -105,11 +119,15 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         return backendMatcher.toString();
     }
 
-    public static <T> T argLambda(CheckedPredicate<T> lambda) {
+    public static <T> T argLambda(Predicate<T> lambda) {
         return argLambda(lambda, "Inline lambda expression - add description in code to get more detailed error message");
     }
 
-    public static <T> T argLambda(CheckedPredicate<T> lambda, String description) {
+    public static <T> T argLambda(Predicate<T> lambda, String description) {
+        return argThat(new LambdaMatcher<>(lambda, description));
+    }
+
+    public static <T> T argLambdaChecked(CheckedPredicate<T> lambda, String description) {
         return argThat(new LambdaMatcher<>(lambda, description));
     }
 }

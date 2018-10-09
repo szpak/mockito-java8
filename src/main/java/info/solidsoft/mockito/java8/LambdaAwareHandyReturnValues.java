@@ -8,6 +8,8 @@ package info.solidsoft.mockito.java8;
 import net.jodah.typetools.TypeResolver;
 import org.mockito.internal.util.Primitives;
 
+import java.util.function.Consumer;
+
 /**
  * Extended version of HandyReturnValues which can resolve safe return type also for Consumer argument.
  *
@@ -16,10 +18,15 @@ import org.mockito.internal.util.Primitives;
  * @author Marcin Zajączkowski
  */
 class LambdaAwareHandyReturnValues {
+    @SuppressWarnings("unchecked")
+    <T> T returnForConsumerLambda(Consumer<T> consumer) {
+        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(CheckedConsumer.class, consumer.getClass());
+        return (T) Primitives.defaultValue(typeArgs[0]);
+    }
 
     @SuppressWarnings("unchecked")
-    <T> T returnForConsumerLambda(CheckedConsumer<T> consumer) {
-        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(CheckedConsumer.class, consumer.getClass());
+    <T> T returnForConsumerLambda(CheckedConsumer<T> checkedConsumer) {
+        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(CheckedConsumer.class, checkedConsumer.getClass());
         return (T) Primitives.defaultValue(typeArgs[0]);
     }
 }

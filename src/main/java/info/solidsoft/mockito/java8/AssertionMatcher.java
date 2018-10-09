@@ -8,6 +8,8 @@ package info.solidsoft.mockito.java8;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 
+import java.util.function.Consumer;
+
 /**
  * Allows creating inlined ArgumentCaptor with a lambda expression.
  * <p>
@@ -47,22 +49,35 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
-    private final CheckedConsumer<T> consumer;
+    private final Consumer<T> consumer;
+    private final CheckedConsumer<T> checkedConsumer;
     private String errorMessage;
 
-    private AssertionMatcher(CheckedConsumer<T> consumer) {
+    private AssertionMatcher(Consumer<T> consumer) {
         this.consumer = consumer;
+        this.checkedConsumer = null;
+    }
+
+    private AssertionMatcher(CheckedConsumer<T> checkedConsumer) {
+        this.consumer = null;
+        this.checkedConsumer = checkedConsumer;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean matches(T argument) {
         try {
-            consumer.accept(argument);
+            if (consumer != null) {
+                consumer.accept(argument);
+            } else {
+                checkedConsumer.accept(argument);
+            }
             return true;
-        } catch (AssertionError | Exception e) {
+        } catch (AssertionError e) {
             errorMessage = e.getMessage();
             return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -71,8 +86,13 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
         return "AssertionMatcher reported: " + errorMessage;
     }
 
-    public static <T> T assertArg(CheckedConsumer<T> consumer) {
+    public static <T> T assertArg(Consumer<T> consumer) {
         Mockito.argThat(new AssertionMatcher<>(consumer));
         return handyReturnValues.returnForConsumerLambda(consumer);
+    }
+
+    public static <T> T assertArgChecked(CheckedConsumer<T> checkedConsumer) {
+        Mockito.argThat(new AssertionMatcher<>(checkedConsumer));
+        return handyReturnValues.returnForConsumerLambda(checkedConsumer);
     }
 }
