@@ -45,39 +45,27 @@ import java.util.function.Consumer;
  *
  * @author Marcin Zajączkowski
  */
+@SuppressWarnings("WeakerAccess")
 public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
 
     private final Consumer<T> consumer;
-    private final CheckedConsumer<T> checkedConsumer;
     private String errorMessage;
 
     private AssertionMatcher(Consumer<T> consumer) {
         this.consumer = consumer;
-        this.checkedConsumer = null;
-    }
-
-    private AssertionMatcher(CheckedConsumer<T> checkedConsumer) {
-        this.consumer = null;
-        this.checkedConsumer = checkedConsumer;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean matches(T argument) {
         try {
-            if (consumer != null) {
-                consumer.accept(argument);
-            } else {
-                checkedConsumer.accept(argument);
-            }
+            consumer.accept(argument);
             return true;
         } catch (AssertionError e) {
             errorMessage = e.getMessage();
             return false;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -87,12 +75,17 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
     }
 
     public static <T> T assertArg(Consumer<T> consumer) {
-        Mockito.argThat(new AssertionMatcher<>(consumer));
+        argThat(consumer);
         return handyReturnValues.returnForConsumerLambda(consumer);
     }
 
     public static <T> T assertArgChecked(CheckedConsumer<T> checkedConsumer) {
-        Mockito.argThat(new AssertionMatcher<>(checkedConsumer));
+        argThat(checkedConsumer.uncheck());
         return handyReturnValues.returnForConsumerLambda(checkedConsumer);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static <T> void argThat(Consumer<T> consumer) {
+        Mockito.argThat(new AssertionMatcher<>(consumer));
     }
 }

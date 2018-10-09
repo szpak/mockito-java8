@@ -14,6 +14,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.IOException;
+
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgChecked;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,11 +79,32 @@ public class AssertionMatcherTest {
                         ");");
     }
 
-    @Test(expected = RuntimeException.class)
-    public void shouldWrapAnyExceptionAsRuntimeException() {
+    @SuppressWarnings("Convert2MethodRef")
+    @Test
+    public void shouldAcceptLambdaWhichMayThrowCheckedException() {
         //when
         ts.fireTorpedo(2);
         //then
-        verify(ts).fireTorpedo(assertArgChecked(i -> { throw new Exception("assertion failed"); }));
+        verify(ts).fireTorpedo(assertArgChecked(i -> methodDeclaringThrowingCheckedException(i)));
+    }
+
+    @Test
+    public void shouldAcceptMethodReferenceWhichMayThrowCheckedException() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        verify(ts).fireTorpedo(assertArgChecked(this::methodDeclaringThrowingCheckedException));
+    }
+
+    @Test(expected = IOException.class)
+    public void shouldPropagateCheckedExceptionIfThrownInLambda() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        verify(ts).fireTorpedo(assertArgChecked(i -> { throw new IOException("Unexpected checked exception"); }));
+    }
+
+    private void methodDeclaringThrowingCheckedException(int i) throws Exception {
+        assertThat(i).isEqualTo(2);
     }
 }
