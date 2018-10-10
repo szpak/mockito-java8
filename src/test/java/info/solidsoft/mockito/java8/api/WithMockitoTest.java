@@ -6,14 +6,14 @@
 package info.solidsoft.mockito.java8.api;
 
 import info.solidsoft.mockito.java8.domain.TacticalStation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WithMockitoTest implements WithMockito {
+class WithMockitoTest implements WithMockito {
 
     @Test
-    public void shouldVerifyMethodExecution() {
+    void shouldVerifyMethodExecution() {
         //arrange
         TacticalStation tsSpy = spy(TacticalStation.class);
         doNothing().when(tsSpy).fireTorpedo(2);
@@ -25,7 +25,7 @@ public class WithMockitoTest implements WithMockito {
     }
 
     @Test
-    public void shouldAllowToCreateMockAndStubWithAnswerInClassicStyleWithoutStaticImports() {
+    void shouldAllowToCreateMockAndStubWithAnswerInClassicStyleWithoutStaticImports() {
         //arrange
         TacticalStation tsMock = mock(TacticalStation.class);
         when(tsMock.getNumberOfTubes()).thenAnswer(i -> 3);

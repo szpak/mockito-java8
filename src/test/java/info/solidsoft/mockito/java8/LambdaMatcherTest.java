@@ -9,13 +9,12 @@ import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
 import org.hamcrest.CustomMatcher;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 
@@ -23,20 +22,13 @@ import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambdaChecked;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.core.Is.isA;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
-import static org.mockito.junit.MockitoJUnit.rule;
 
-public class LambdaMatcherTest {
+@ExtendWith(MockitoExtension.class)
+class LambdaMatcherTest {
 
     private static final String UNEXPECTED_CHECKED_EXCEPTION_MESSAGE = "Unexpected checked exception";
-
-    @Rule
-    public MockitoRule rule = rule();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     private TacticalStation ts;
@@ -44,7 +36,7 @@ public class LambdaMatcherTest {
     private ShipSearchCriteria searchCriteria = new ShipSearchCriteria(1000, 4);
 
     @Test
-    public void simpleBaseMatcherShouldWork() {
+    void simpleBaseMatcherShouldWork() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -64,7 +56,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void customMatcherShouldBeMoreCompact() {
+    void customMatcherShouldBeMoreCompact() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -81,7 +73,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void argumentMatcherShouldBeEvenMoreCompact() {
+    void argumentMatcherShouldBeEvenMoreCompact() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -99,7 +91,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldAllowToUseLambdaInMatcher() {
+    void shouldAllowToUseLambdaInMatcher() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -109,7 +101,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldAllowToUseLambdaInMatcherWithAdditionalDescription() {
+    void shouldAllowToUseLambdaInMatcherWithAdditionalDescription() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -119,7 +111,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldAllowToUseLambdaWithMultipleConditionsInMatcher() {
+    void shouldAllowToUseLambdaWithMultipleConditionsInMatcher() {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -131,7 +123,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldKeepDescriptionInErrorMessage() {
+    void shouldKeepDescriptionInErrorMessage() {
         //given
         final String DESCRIPTION = "minimum range closer than 100";
         //when
@@ -154,7 +146,7 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldAcceptLambdaWhichMayThrowCheckedException() throws Exception {
+    void shouldAcceptLambdaWhichMayThrowCheckedException() throws Exception {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -164,18 +156,21 @@ public class LambdaMatcherTest {
     }
 
     @Test
-    public void shouldPropagateCheckedExceptionIfThrownInLambda() throws Exception {
+    void shouldPropagateCheckedExceptionIfThrownInLambda() throws Exception {
         //when
         int numberOfShips = ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
         assertThat(numberOfShips).isZero();
         //and
-        thrown.expect(RuntimeException.class);  //TODO: Replace with assertThorws() in JUnit 5
-        thrown.expectCause(isA(IOException.class));
-        thrown.expectMessage(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE);
-        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> { throw new IOException(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE); }));
+        assertThatThrownBy(() -> verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> {
+            throw new IOException(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE);
+        })))
+                .isInstanceOf(RuntimeException.class)
+                .hasCauseInstanceOf(IOException.class)
+                .hasMessage("java.io.IOException: " + UNEXPECTED_CHECKED_EXCEPTION_MESSAGE);
     }
 
+    @SuppressWarnings("RedundantThrows")
     private CheckedPredicate<ShipSearchCriteria> methodDeclaringThrowingCheckedException() throws Exception {
         return c -> c.getMinimumRange() < 2000 && c.getNumberOfPhasers() > 2;
     }

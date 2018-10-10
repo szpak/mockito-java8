@@ -6,15 +6,15 @@
 package info.solidsoft.mockito.java8.api;
 
 import info.solidsoft.mockito.java8.domain.TacticalStation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static info.solidsoft.mockito.java8.domain.TacticalStation.TubeStatus.LOADED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WithMockitoAndAdditionalMatchersTest implements WithBDDMockito, WithAdditionalMatchers {
+class WithMockitoAndAdditionalMatchersTest implements WithBDDMockito, WithAdditionalMatchers {
 
     @Test
-    public void shouldAllowToCreateSpyStubAndVerifyWithMatcherWithoutStaticImports() {
+    void shouldAllowToCreateSpyStubAndVerifyWithMatcherWithoutStaticImports() {
         //given
         TacticalStation tsSpy = spy(TacticalStation.class);
         willDoNothing().given(tsSpy).fireTorpedo(lt(3));
@@ -25,7 +25,7 @@ public class WithMockitoAndAdditionalMatchersTest implements WithBDDMockito, Wit
     }
 
     @Test
-    public void shouldAllowToCreateMockAndStubWithoutStaticImports() {
+    void shouldAllowToCreateMockAndStubWithoutStaticImports() {
         //given
         TacticalStation tsMock = mock(TacticalStation.class);
         given(tsMock.getTubeStatus(geq(2))).willReturn(LOADED);
@@ -36,7 +36,7 @@ public class WithMockitoAndAdditionalMatchersTest implements WithBDDMockito, Wit
     }
 
     @Test
-    public void shouldVerifyMethodExecutionToAdditionalMatcherWithoutStaticImports() {
+    void shouldVerifyMethodExecutionToAdditionalMatcherWithoutStaticImports() {
         //given
         TacticalStation tsSpy = spy(TacticalStation.class);
         willDoNothing().given(tsSpy).fireTorpedo(2);
