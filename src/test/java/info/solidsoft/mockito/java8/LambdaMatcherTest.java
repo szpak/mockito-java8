@@ -12,11 +12,10 @@ import org.hamcrest.CustomMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
 
@@ -27,11 +26,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.core.Is.isA;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.junit.MockitoJUnit.rule;
 
-@RunWith(MockitoJUnitRunner.class)
 public class LambdaMatcherTest {
 
     private static final String UNEXPECTED_CHECKED_EXCEPTION_MESSAGE = "Unexpected checked exception";
+
+    @Rule
+    public MockitoRule rule = rule();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

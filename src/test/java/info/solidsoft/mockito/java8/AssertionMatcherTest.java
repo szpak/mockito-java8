@@ -8,11 +8,11 @@ package info.solidsoft.mockito.java8;
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
 
@@ -21,9 +21,12 @@ import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgChecked;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.junit.MockitoJUnit.rule;
 
-@RunWith(MockitoJUnitRunner.class)  //MockitoRule is not used to build also Mockito version before 1.10.17
 public class AssertionMatcherTest {
+
+    @Rule
+    public MockitoRule rule = rule();
 
     @Mock
     private TacticalStation ts;
