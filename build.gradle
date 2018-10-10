@@ -32,7 +32,9 @@ dependencies {
     compile "org.mockito:mockito-core:$mockitoVersion"
     compile 'net.jodah:typetools:0.5.0'
 
-    testCompile 'junit:junit:4.12'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile 'org.junit.vintage:junit-vintage-engine:5.3.1'
     testCompile 'org.assertj:assertj-core:3.11.1'
 }
 
