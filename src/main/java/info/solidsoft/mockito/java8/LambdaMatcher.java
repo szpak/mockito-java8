@@ -116,11 +116,17 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         return argThat(new LambdaMatcher<>(lambda, description));
     }
 
+    /**
+     * A variant of argLambda(Predicate) for lambdas declaring checked ecceptions.
+     */
     @Incubating
     public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda) {
         return argLambda(throwingLambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
     }
 
+    /**
+     * A variant of argLambda(Predicate) for lambdas declaring checked exceptions.
+     */
     @Incubating
     public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda, String description) {
         return argThat(new LambdaMatcher<>(throwingLambda.uncheck(), description));

@@ -80,6 +80,9 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
         return handyReturnValues.returnForConsumerLambda(consumer);
     }
 
+    /**
+     * A variant of assertArg(Consumer) for lambdas declaring checked exceptions.
+     */
     @Incubating
     public static <T> T assertArgThrowing(ThrowingConsumer<T> throwingConsumer) {
         argThat(throwingConsumer.uncheck());
