@@ -6,6 +6,7 @@
 package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
+import org.mockito.Incubating;
 
 import java.util.function.Predicate;
 
@@ -115,10 +116,12 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
         return argThat(new LambdaMatcher<>(lambda, description));
     }
 
+    @Incubating
     public static <T> T argLambdaChecked(CheckedPredicate<T> lambda) {
         return argLambda(lambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
     }
 
+    @Incubating
     public static <T> T argLambdaChecked(CheckedPredicate<T> lambda, String description) {
         return argThat(new LambdaMatcher<>(lambda.uncheck(), description));
     }

@@ -6,6 +6,7 @@
 package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
+import org.mockito.Incubating;
 import org.mockito.Mockito;
 
 import java.util.function.Consumer;
@@ -79,6 +80,7 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
         return handyReturnValues.returnForConsumerLambda(consumer);
     }
 
+    @Incubating
     public static <T> T assertArgChecked(CheckedConsumer<T> checkedConsumer) {
         argThat(checkedConsumer.uncheck());
         return handyReturnValues.returnForConsumerLambdaChecked(checkedConsumer);
