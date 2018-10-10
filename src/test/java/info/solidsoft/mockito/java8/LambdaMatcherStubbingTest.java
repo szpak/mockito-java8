@@ -7,20 +7,23 @@ package info.solidsoft.mockito.java8;
 
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
-@RunWith(MockitoJUnitRunner.class)
 public class LambdaMatcherStubbingTest {
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock
     private TacticalStation ts;
