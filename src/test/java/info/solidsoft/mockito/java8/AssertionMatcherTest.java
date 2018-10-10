@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
-import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgChecked;
+import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgThrowing;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -85,7 +85,7 @@ class AssertionMatcherTest {
         //when
         ts.fireTorpedo(2);
         //then
-        verify(ts).fireTorpedo(assertArgChecked(i -> methodDeclaringThrowingCheckedException(i)));
+        verify(ts).fireTorpedo(assertArgThrowing(i -> methodDeclaringThrowingCheckedException(i)));
     }
 
     @Test
@@ -93,7 +93,7 @@ class AssertionMatcherTest {
         //when
         ts.fireTorpedo(2);
         //then
-        verify(ts).fireTorpedo(assertArgChecked(this::methodDeclaringThrowingCheckedException));
+        verify(ts).fireTorpedo(assertArgThrowing(this::methodDeclaringThrowingCheckedException));
     }
 
     @Test
@@ -101,7 +101,7 @@ class AssertionMatcherTest {
         //when
         ts.fireTorpedo(2);
         //then
-        assertThatThrownBy(() -> verify(ts).fireTorpedo(assertArgChecked(i -> {
+        assertThatThrownBy(() -> verify(ts).fireTorpedo(assertArgThrowing(i -> {
             throw new IOException("Unexpected checked exception");
         })))
                 .isInstanceOf(IOException.class);

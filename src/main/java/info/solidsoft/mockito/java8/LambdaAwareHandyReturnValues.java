@@ -23,8 +23,8 @@ class LambdaAwareHandyReturnValues {
         return internalReturnForLambda(consumer, Consumer.class);
     }
 
-    <T> T returnForConsumerLambdaChecked(CheckedConsumer<T> checkedConsumer) {
-        return internalReturnForLambda(checkedConsumer, CheckedConsumer.class);
+    <T> T returnForConsumerLambdaChecked(ThrowingConsumer<T> throwingConsumer) {
+        return internalReturnForLambda(throwingConsumer, ThrowingConsumer.class);
     }
 
     @SuppressWarnings("unchecked")

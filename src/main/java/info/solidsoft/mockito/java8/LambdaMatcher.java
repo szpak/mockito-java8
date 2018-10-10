@@ -117,12 +117,12 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
     }
 
     @Incubating
-    public static <T> T argLambdaChecked(CheckedPredicate<T> lambda) {
-        return argLambda(lambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
+    public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda) {
+        return argLambda(throwingLambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
     }
 
     @Incubating
-    public static <T> T argLambdaChecked(CheckedPredicate<T> lambda, String description) {
-        return argThat(new LambdaMatcher<>(lambda.uncheck(), description));
+    public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda, String description) {
+        return argThat(new LambdaMatcher<>(throwingLambda.uncheck(), description));
     }
 }

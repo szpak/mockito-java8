@@ -81,9 +81,9 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
     }
 
     @Incubating
-    public static <T> T assertArgChecked(CheckedConsumer<T> checkedConsumer) {
-        argThat(checkedConsumer.uncheck());
-        return handyReturnValues.returnForConsumerLambdaChecked(checkedConsumer);
+    public static <T> T assertArgThrowing(ThrowingConsumer<T> throwingConsumer) {
+        argThat(throwingConsumer.uncheck());
+        return handyReturnValues.returnForConsumerLambdaChecked(throwingConsumer);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

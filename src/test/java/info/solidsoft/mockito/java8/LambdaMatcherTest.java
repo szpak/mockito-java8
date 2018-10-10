@@ -8,18 +8,16 @@ package info.solidsoft.mockito.java8;
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
-import org.hamcrest.CustomMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
-import static info.solidsoft.mockito.java8.LambdaMatcher.argLambdaChecked;
+import static info.solidsoft.mockito.java8.LambdaMatcher.argLambdaThrowing;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -55,6 +53,8 @@ class LambdaMatcherTest {
         }));
     }
 
+/*
+    //Only as comparison - Hamcrest matchers are no longer on project classpath
     @Test
     void customMatcherShouldBeMoreCompact() {
         //when
@@ -71,6 +71,7 @@ class LambdaMatcherTest {
                     }
                 })));
     }
+*/
 
     @Test
     void argumentMatcherShouldBeEvenMoreCompact() {
@@ -152,7 +153,7 @@ class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(methodDeclaringThrowingCheckedException()));
+        verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaThrowing(methodDeclaringThrowingCheckedException()));
     }
 
     @Test
@@ -162,7 +163,7 @@ class LambdaMatcherTest {
         //then
         assertThat(numberOfShips).isZero();
         //and
-        assertThatThrownBy(() -> verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaChecked(c -> {
+        assertThatThrownBy(() -> verify(ts).findNumberOfShipsInRangeByCriteria(argLambdaThrowing(c -> {
             throw new IOException(UNEXPECTED_CHECKED_EXCEPTION_MESSAGE);
         })))
                 .isInstanceOf(RuntimeException.class)
@@ -171,7 +172,7 @@ class LambdaMatcherTest {
     }
 
     @SuppressWarnings("RedundantThrows")
-    private CheckedPredicate<ShipSearchCriteria> methodDeclaringThrowingCheckedException() throws Exception {
+    private ThrowingPredicate<ShipSearchCriteria> methodDeclaringThrowingCheckedException() throws Exception {
         return c -> c.getMinimumRange() < 2000 && c.getNumberOfPhasers() > 2;
     }
 }

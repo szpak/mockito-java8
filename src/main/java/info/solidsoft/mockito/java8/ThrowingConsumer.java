@@ -5,12 +5,15 @@
  */
 package info.solidsoft.mockito.java8;
 
+import org.mockito.Incubating;
+
 import java.util.function.Consumer;
 
 import static info.solidsoft.mockito.java8.SneakyThrow.sneakyRethrow;
 
 @FunctionalInterface
-public interface CheckedConsumer<T> {
+@Incubating
+public interface ThrowingConsumer<T> {
 
     void accept(T t) throws Exception;
 

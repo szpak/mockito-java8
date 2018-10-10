@@ -5,12 +5,15 @@
  */
 package info.solidsoft.mockito.java8;
 
+import org.mockito.Incubating;
+
 import java.util.function.Predicate;
 
 import static info.solidsoft.mockito.java8.SneakyThrow.sneakyRethrow;
 
 @FunctionalInterface
-public interface CheckedPredicate<T> {
+@Incubating
+public interface ThrowingPredicate<T> {
 
     boolean test(T t) throws Exception;
 
