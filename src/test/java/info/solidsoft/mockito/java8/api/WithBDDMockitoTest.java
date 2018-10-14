@@ -6,17 +6,18 @@
 package info.solidsoft.mockito.java8.api;
 
 import info.solidsoft.mockito.java8.domain.TacticalStation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class WithBDDMockitoTest implements WithBDDMockito {
+class WithBDDMockitoTest implements WithBDDMockito {
 
     @Test
-    public void shouldAllowToCreateMockAndStubWithAnswerInClassicStyleWithoutStaticImports() {
+    void shouldAllowToCreateMockAndStubWithAnswerInClassicStyleWithoutStaticImports() {
         //given
         TacticalStation tsMock = mock(TacticalStation.class);
         given(tsMock.getNumberOfTubes()).willAnswer(i -> 3);
@@ -27,7 +28,7 @@ public class WithBDDMockitoTest implements WithBDDMockito {
     }
 
     @Test
-    public void shouldVerifyMethodExecutionWithBasicMatcherWithoutStaticImports() {
+    void shouldVerifyMethodExecutionWithBasicMatcherWithoutStaticImports() {
         //given
         TacticalStation tsSpy = spy(TacticalStation.class);
         willDoNothing().given(tsSpy).fireTorpedo(anyInt());
@@ -38,13 +39,14 @@ public class WithBDDMockitoTest implements WithBDDMockito {
         then(tsSpy).should(times(2)).fireTorpedo(2);
     }
 
-    @Test(expected = IOException.class) //Issue #7
-    public void shouldProperlyCallVarargsMethod() throws IOException {
+    @Test //Issue #7
+    void shouldProperlyCallVarargsMethod() throws IOException {
         //given
         BufferedWriter writerMock = mock(BufferedWriter.class);
         //when
         willThrow(new IOException()).given(writerMock).write(anyString());
         //then
-        writerMock.write("should throw IOException");
+        assertThatThrownBy(() -> writerMock.write("should throw IOException"))
+                .isInstanceOf(IOException.class);
     }
 }

@@ -19,9 +19,17 @@ import java.util.function.Consumer;
  */
 class LambdaAwareHandyReturnValues {
 
-    @SuppressWarnings("unchecked")
     <T> T returnForConsumerLambda(Consumer<T> consumer) {
-        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(Consumer.class, consumer.getClass());
+        return internalReturnForLambda(consumer, Consumer.class);
+    }
+
+    <T> T returnForConsumerLambdaChecked(ThrowingConsumer<T> throwingConsumer) {
+        return internalReturnForLambda(throwingConsumer, ThrowingConsumer.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T internalReturnForLambda(Object consumer, Class consumerType) {
+        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(consumerType, consumer.getClass());
         return (T) Primitives.defaultValue(typeArgs[0]);
     }
 }

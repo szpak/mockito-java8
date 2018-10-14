@@ -8,19 +8,22 @@ package info.solidsoft.mockito.java8;
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
 import org.assertj.core.api.ThrowableAssert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.IOException;
 
 import static info.solidsoft.mockito.java8.AssertionMatcher.assertArg;
+import static info.solidsoft.mockito.java8.AssertionMatcher.assertArgThrowing;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)  //MockitoRule is not used to build also Mockito version before 1.10.17
-public class AssertionMatcherTest {
+@ExtendWith(MockitoExtension.class)
+class AssertionMatcherTest {
 
     @Mock
     private TacticalStation ts;
@@ -28,7 +31,7 @@ public class AssertionMatcherTest {
     private ShipSearchCriteria searchCriteria = new ShipSearchCriteria(1000, 4);
 
     @Test
-    public void shouldAllowToUseArgumentCaptorInClassicWay() {
+    void shouldAllowToUseArgumentCaptorInClassicWay() {
         //when
         ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -38,7 +41,7 @@ public class AssertionMatcherTest {
     }
 
     @Test
-    public void shouldAllowToUseAssertionInLambda() {
+    void shouldAllowToUseAssertionInLambda() {
         //when
         ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -46,7 +49,7 @@ public class AssertionMatcherTest {
     }
 
     @Test
-    public void shouldAllowToUseAssertionInLambdaWithPrimitiveAsArgument() {
+    void shouldAllowToUseAssertionInLambdaWithPrimitiveAsArgument() {
         //when
         ts.fireTorpedo(2);
         //then
@@ -54,7 +57,7 @@ public class AssertionMatcherTest {
     }
 
     @Test
-    public void shouldHaveMeaningfulErrorMessage() {
+    void shouldHaveMeaningfulErrorMessage() {
         //when
         ts.findNumberOfShipsInRangeByCriteria(searchCriteria);
         //then
@@ -74,5 +77,37 @@ public class AssertionMatcherTest {
                         "ts.findNumberOfShipsInRangeByCriteria(\n" +
                         "    ShipSearchCriteria{minimumRange=1000, numberOfPhasers=4}\n" +
                         ");");
+    }
+
+    @SuppressWarnings("Convert2MethodRef")
+    @Test
+    void shouldAcceptLambdaWhichMayThrowCheckedException() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        verify(ts).fireTorpedo(assertArgThrowing(i -> methodDeclaringThrowingCheckedException(i)));
+    }
+
+    @Test
+    void shouldAcceptMethodReferenceWhichMayThrowCheckedException() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        verify(ts).fireTorpedo(assertArgThrowing(this::methodDeclaringThrowingCheckedException));
+    }
+
+    @Test
+    void shouldPropagateCheckedExceptionIfThrownInLambda() {
+        //when
+        ts.fireTorpedo(2);
+        //then
+        assertThatThrownBy(() -> verify(ts).fireTorpedo(assertArgThrowing(i -> {
+            throw new IOException("Unexpected checked exception");
+        })))
+                .isInstanceOf(IOException.class);
+    }
+
+    private void methodDeclaringThrowingCheckedException(int i) throws Exception {
+        assertThat(i).isEqualTo(2);
     }
 }

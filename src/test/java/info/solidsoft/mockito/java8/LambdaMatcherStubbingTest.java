@@ -7,26 +7,26 @@ package info.solidsoft.mockito.java8;
 
 import info.solidsoft.mockito.java8.domain.ShipSearchCriteria;
 import info.solidsoft.mockito.java8.domain.TacticalStation;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import static info.solidsoft.mockito.java8.LambdaMatcher.argLambda;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LambdaMatcherStubbingTest {
+@ExtendWith(MockitoExtension.class)
+class LambdaMatcherStubbingTest {
 
     @Mock
     private TacticalStation ts;
 
     @Test
-    public void shouldAllowToUseLambdaInStubbing() {
+    void shouldAllowToUseLambdaInStubbing() {
         //given
         given(ts.findNumberOfShipsInRangeByCriteria(argLambda(c -> c.getMinimumRange() > 1000))).willReturn(4);
         //expect
@@ -35,8 +35,9 @@ public class LambdaMatcherStubbingTest {
         assertThat(ts.findNumberOfShipsInRangeByCriteria(new ShipSearchCriteria(700, 2))).isEqualTo(0);
     }
 
+    @SuppressWarnings("Convert2Lambda")
     @Test
-    public void stubbingWithCustomAnswerShouldBeLonger() {
+    void stubbingWithCustomAnswerShouldBeLonger() {
         //given
         given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
             @Override
@@ -57,7 +58,7 @@ public class LambdaMatcherStubbingTest {
     }
 
     @Test
-    public void stubbingWithCustomAnswerShouldBeLongerEvenAsLambda() {
+    void stubbingWithCustomAnswerShouldBeLongerEvenAsLambda() {
         //given
         given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(invocation -> {
             ShipSearchCriteria criteria = (ShipSearchCriteria) invocation.getArguments()[0];

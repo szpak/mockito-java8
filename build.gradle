@@ -16,7 +16,7 @@ apply plugin: 'com.toomuchcoding.uptodate'
 apply from: "$rootDir/gradle/cdeliveryboy-release.gradle"
 apply from: "$rootDir/gradle/manifest.gradle"
 
-ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.22.0'
+ext.mockitoVersion = findProperty('mockitoVersion') ?: '2.23.0'
 
 sourceCompatibility = 1.8
 
@@ -32,7 +32,9 @@ dependencies {
     compile "org.mockito:mockito-core:$mockitoVersion"
     compile 'net.jodah:typetools:0.5.0'
 
-    testCompile 'junit:junit:4.12'
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile "org.mockito:mockito-junit-jupiter:$mockitoVersion"
     testCompile 'org.assertj:assertj-core:3.11.1'
 }
 

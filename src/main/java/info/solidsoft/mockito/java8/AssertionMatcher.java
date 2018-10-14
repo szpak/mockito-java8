@@ -6,6 +6,7 @@
 package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
+import org.mockito.Incubating;
 import org.mockito.Mockito;
 
 import java.util.function.Consumer;
@@ -39,12 +40,13 @@ import java.util.function.Consumer;
  * }
  *
  * AssertJ assertions (assertThat()) used in lambda generate meaningful error messages in face of failure, but any other assertion can be
- * used if needed/preffered.
+ * used if needed/preferred.
  *
  * @param <T> type of argument
  *
  * @author Marcin Zajączkowski
  */
+@SuppressWarnings("WeakerAccess")
 public class AssertionMatcher<T> implements ArgumentMatcher<T> {
 
     private static final LambdaAwareHandyReturnValues handyReturnValues = new LambdaAwareHandyReturnValues();
@@ -74,7 +76,21 @@ public class AssertionMatcher<T> implements ArgumentMatcher<T> {
     }
 
     public static <T> T assertArg(Consumer<T> consumer) {
-        Mockito.argThat(new AssertionMatcher<>(consumer));
+        argThat(consumer);
         return handyReturnValues.returnForConsumerLambda(consumer);
+    }
+
+    /**
+     * A variant of assertArg(Consumer) for lambdas declaring checked exceptions.
+     */
+    @Incubating
+    public static <T> T assertArgThrowing(ThrowingConsumer<T> throwingConsumer) {
+        argThat(throwingConsumer.uncheck());
+        return handyReturnValues.returnForConsumerLambdaChecked(throwingConsumer);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static <T> void argThat(Consumer<T> consumer) {
+        Mockito.argThat(new AssertionMatcher<>(consumer));
     }
 }

@@ -6,6 +6,7 @@
 package info.solidsoft.mockito.java8;
 
 import org.mockito.ArgumentMatcher;
+import org.mockito.Incubating;
 
 import java.util.function.Predicate;
 
@@ -32,7 +33,7 @@ import static org.mockito.ArgumentMatchers.argThat;
  *
  * <pre class="code"><code class="java">
  *{@literal @}Test
- * public void stubbingWithCustomAsnwerShouldBeLonger() {  //old way
+ * public void stubbingWithCustomAnswerShouldBeLonger() {  //old way
  *     //given
  *     given(ts.findNumberOfShipsInRangeByCriteria(any())).willAnswer(new Answer<Integer>() {
  *        {@literal @}Override
@@ -74,19 +75,19 @@ import static org.mockito.ArgumentMatchers.argThat;
  *
  * @author Marcin Zajączkowski
  */
+@SuppressWarnings("WeakerAccess")
 public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
     private final ArgumentMatcher<T> backendMatcher;    //TODO: Could it be done with just one matcher?
 
     private LambdaMatcher(Predicate<T> lambda, String description) {
         this.backendMatcher = new ArgumentMatcher<T>() {
-            @SuppressWarnings("unchecked")
             @Override
-            public boolean matches(Object item) {
+            public boolean matches(T item) {
                 try {
-                    return lambda.test((T)item);
+                    return lambda.test(item);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException(e); //Could be potentially tricked with CheckedPredicate.uncheck(), but kept for backward compatibility
                 }
             }
 
@@ -113,5 +114,21 @@ public class LambdaMatcher<T> implements ArgumentMatcher<T> {
 
     public static <T> T argLambda(Predicate<T> lambda, String description) {
         return argThat(new LambdaMatcher<>(lambda, description));
+    }
+
+    /**
+     * A variant of argLambda(Predicate) for lambdas declaring checked ecceptions.
+     */
+    @Incubating
+    public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda) {
+        return argLambda(throwingLambda.uncheck(), "Inline lambda expression - add description in code to get more detailed error message");
+    }
+
+    /**
+     * A variant of argLambda(Predicate) for lambdas declaring checked exceptions.
+     */
+    @Incubating
+    public static <T> T argLambdaThrowing(ThrowingPredicate<T> throwingLambda, String description) {
+        return argThat(new LambdaMatcher<>(throwingLambda.uncheck(), description));
     }
 }
