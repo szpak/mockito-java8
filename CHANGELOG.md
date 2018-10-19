@@ -1,6 +1,6 @@
 # mockito-java8 changelog
 
-## 2.5.0 - Unreleased
+## 2.5.0 - 2018-10-19
 
  - Accept lambda expressions declaring checked exceptions - #12, #18 - PR by @Ferada
  - Upgrade default Mockito dependency to 2.23.0
