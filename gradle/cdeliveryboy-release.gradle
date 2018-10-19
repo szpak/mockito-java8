@@ -31,12 +31,12 @@ project.group = "info.solidsoft.mockito"
 //Beware: All release/version related changes should be put before that line which triggers (lazy) version evaluation
 project.version = scmVersion.version
 
-String repoSlug = 'mockito-java8'
+String repoSlug = 'szpak/mockito-java8'
 modifyPom {
     project {
         name 'Mockito-Java8'
         description 'Mockito add-ons leveraging Java 8 and lambda expressions to make mocking even more compact'
-        url 'https://github.com/szpak/mockito-java8'
+        url "https://github.com/$repoSlug"
         inceptionYear '2015'
 
         scm {
