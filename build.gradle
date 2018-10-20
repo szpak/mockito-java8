@@ -29,6 +29,7 @@ test {
 
     afterSuite { desc, result ->
         if (!desc.parent) {
+            //Workaround - https://github.com/gradle/gradle/issues/7452
             if (result.testCount == 0) {
                 throw new IllegalStateException("No tests were found. Failing the build")
             }
