@@ -48,7 +48,7 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.2'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
     testCompile "org.mockito:mockito-junit-jupiter:$mockitoVersion"
-    testCompile 'org.assertj:assertj-core:3.12.0'
+    testCompile 'org.assertj:assertj-core:3.12.1'
 }
 
 //Disable JavaDoc doclint on Java 8 - it fails on invalid JavaDoc elements in mockito-core jar
