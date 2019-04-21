@@ -57,3 +57,5 @@ matrix:
       env: SKIP_RELEASE=true
     - jdk: openjdk11
       env: SKIP_RELEASE=true
+    - jdk: openjdk12
+      env: SKIP_RELEASE=true
